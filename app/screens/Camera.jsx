@@ -7,9 +7,9 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native'
+import { useNavigation } from '@react-navigation/native'
 import { Camera } from 'expo-camera'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import * as ImagePicker from 'expo-image-picker'
 
 const styles = StyleSheet.create({
   baseButton: {
@@ -32,6 +32,7 @@ export default function App() {
   const [type, setType] = useState(Camera.Constants.Type.back)
   const [camera, setCamera] = useState(null)
   const [pictureTaken, setPictureTaken] = useState(null)
+  const { navigate, goBack } = useNavigation()
 
   const takePicture = async () => {
     if (camera) {
@@ -141,6 +142,7 @@ export default function App() {
               alignItems: 'center',
               backgroundColor: 'transparent'
             }}
+            onPress={() => goBack()}
           >
             <Ionicons
               name="ios-arrow-back"

@@ -1,11 +1,31 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 
-export default RecipeDetails = (props) => {
+import Ingredients from './Ingredients'
 
-    return(
-        <View>
-            <Text>INI KULKAS</Text>
-        </View>
-    )
+const RecipeDetails = props => {
+  return (
+    <ScrollView>
+      <View style={styles.container}>
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+        <Ingredients />
+      </View>
+    </ScrollView>
+  )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around'
+  }
+})
+
+export default RecipeDetails
