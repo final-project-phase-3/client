@@ -1,20 +1,17 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
-import TabNavigator  from './navigations/HomeTabNavigation';
-import SearchResult from './screens/SearchResult';
 
+import TabNavigator from './navigations/HomeTabNavigation'
 
 export default function App() {
-
-
   return (
     <NavigationContainer>
       <View style={styles.container}>
-        <TabNavigator/>
+        <TabNavigator />
       </View>
     </NavigationContainer>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -22,6 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    justifyContent: 'center'
+  }
+})
