@@ -1,11 +1,19 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native'
+import TabNavigator  from './navigations/HomeTabNavigation';
+import SearchResult from './screens/SearchResult';
+
 
 export default function App() {
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <TabNavigator/>
+      </View>
+    </NavigationContainer>
   );
 }
 
