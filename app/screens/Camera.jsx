@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  Dimensions
-} from 'react-native'
+import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Camera } from 'expo-camera'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
@@ -85,7 +78,7 @@ export default function App() {
         >
           <Text style={styles.confirmText}>Result Image</Text>
           <Image
-            style={{ flex: 1.6, height: 500, width: 313 }}
+            style={{ flex: 1.6, height: 500, width: 313, resizeMode: 'cover' }}
             source={{ uri: pictureTaken }}
           />
           <View style={{ flex: 0.4 }}>

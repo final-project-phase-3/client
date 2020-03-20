@@ -39,6 +39,16 @@ function Home() {
       </View>
       <ActionButton
         buttonColor="rgba(231,76,60,1)"
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4
+          },
+          shadowOpacity: 0.32,
+          shadowRadius: 5.46,
+          elevation: 9
+        }}
         onPress={() => {
           console.log('hi')
         }}
