@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 
+<<<<<<< HEAD
 import TabNavigator from './navigations/HomeTabNavigation'
 
 export default function App() {
@@ -12,13 +13,18 @@ export default function App() {
       </View>
     </NavigationContainer>
   )
+=======
+import Home from './screens/Home'
+import Camera from './components/Camera'
+
+export default function App() {
+  return <Camera />
+>>>>>>> styling camera result page
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#fff'
   }
 })

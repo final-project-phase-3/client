@@ -1,12 +1,31 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, TouchableOpacity, Image, Button } from 'react-native'
-import { Camera } from 'expo-camera'
 import {
-  FontAwesome,
-  Ionicons,
-  MaterialCommunityIcons
-} from '@expo/vector-icons'
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Dimensions
+} from 'react-native'
+import { Camera } from 'expo-camera'
+import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import * as ImagePicker from 'expo-image-picker'
+
+const styles = StyleSheet.create({
+  baseButton: {
+    textAlign: 'center',
+    padding: 5,
+    color: '#EFEFEF',
+    marginRight: 5
+  },
+  confirmText: {
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 15,
+    color: '#1DB954',
+    fontWeight: 'bold'
+  }
+})
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState(null)
@@ -18,7 +37,6 @@ export default function App() {
     if (camera) {
       let photo = await camera.takePictureAsync({ base64: true })
       console.log(photo.uri)
-      console.log(photo.base64.substr(20))
       setPictureTaken(photo.uri)
     }
   }
@@ -34,17 +52,69 @@ export default function App() {
     return <View />
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>
+    return (
+      <Text
+        style={{
+          textAlign: 'center'
+        }}
+      >
+        No access to camera
+      </Text>
+    )
   }
   if (pictureTaken) {
     return (
-      // <Text>PictureTaken</Text>
-      <View>
-        <Image
-          style={{ height: 500, width: 500 }}
-          source={{ uri: pictureTaken }}
-        />
-        <Button onPress={() => setPictureTaken(null)} title="Erase"></Button>
+      <View
+        style={{
+          backgroundColor: '#1DB954',
+          height: '100%',
+          position: 'relative'
+        }}
+      >
+        <View
+          style={{
+            flex: 2,
+            backgroundColor: '#EFEFEF',
+            marginTop: 30,
+            marginBottom: 30,
+            marginLeft: 10,
+            marginRight: 10,
+            padding: 30
+          }}
+        >
+          <Text style={styles.confirmText}>Result Image</Text>
+          <Image
+            style={{ flex: 1.6, height: 500, width: 313 }}
+            source={{ uri: pictureTaken }}
+          />
+          <View style={{ flex: 0.4 }}>
+            <Text style={[styles.confirmText, { marginTop: 15 }]}>
+              Add to your Refrigerator?
+            </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 20
+              }}
+            >
+              <TouchableOpacity onPress={() => setPictureTaken(null)}>
+                <Text
+                  style={[styles.baseButton, { backgroundColor: '#c93022' }]}
+                >
+                  Retake Picture
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text
+                  style={[styles.baseButton, { backgroundColor: '#1DB954' }]}
+                >
+                  Yes, keep it!
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
@@ -62,7 +132,7 @@ export default function App() {
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            margin: 20
+            margin: 30
           }}
         >
           <TouchableOpacity
@@ -73,7 +143,7 @@ export default function App() {
             }}
           >
             <Ionicons
-              name="ios-photos"
+              name="ios-arrow-back"
               style={{ color: '#fff', fontSize: 40 }}
             />
           </TouchableOpacity>
@@ -106,8 +176,8 @@ export default function App() {
               )
             }}
           >
-            <MaterialCommunityIcons
-              name="camera-switch"
+            <Ionicons
+              name="ios-reverse-camera"
               style={{ color: '#fff', fontSize: 40 }}
             />
           </TouchableOpacity>
