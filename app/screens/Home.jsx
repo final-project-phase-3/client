@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, View, Text } from 'react-native'
 
 import Camera from '../components/Camera'
 
 function Home() {
+  const [chosenIngredients, setChosen] = useState([])
+
   return (
     <View>
-      <Text></Text>
+      <Camera />
     </View>
   )
 }
