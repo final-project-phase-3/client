@@ -1,0 +1,1 @@
+// ini buat list query ke graphql ya
