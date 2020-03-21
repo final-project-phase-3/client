@@ -3,6 +3,10 @@ import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Camera } from 'expo-camera'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
+import { useLazyQuery } from '@apollo/react-hooks'
+import ImgToBase64 from 'react-native-image-base64'
+
+import { PROCESS_IMAGE } from '../graphql'
 
 const styles = StyleSheet.create({
   baseButton: {
@@ -25,14 +29,27 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null)
   const [type, setType] = useState(Camera.Constants.Type.back)
   const [camera, setCamera] = useState(null)
+  const [imageResult, setImageResult] = useState('')
   const [pictureTaken, setPictureTaken] = useState(null)
   const { navigate, goBack } = useNavigation()
+
+  const [getImages, { called, loading, error, data }] = useLazyQuery(
+    PROCESS_IMAGE
+  )
 
   const takePicture = async () => {
     if (camera) {
       let photo = await camera.takePictureAsync({ base64: true })
-      console.log(photo.uri)
       setPictureTaken(photo.uri)
+
+      // console.log(photo.base64)
+      setImageResult(`data:image/jpeg;base64,${photo.base64}`)
+
+      // ImgToBase64.getBase64String(`${photo.uri}`)
+      //   .then(base64Str => {
+      //     console.log(base64Str)
+      //   })
+      //   .catch(err => console.log(err))
     }
   }
 
@@ -57,6 +74,19 @@ export default function App() {
       </Text>
     )
   }
+
+  if (called && loading) {
+    return (
+      <View>
+        <Text>Loading ... Saving your ingredients</Text>
+      </View>
+    )
+  } else if (!loading && data) {
+    console.log(data)
+  } else if (!loading && error) {
+    console.log(error)
+  }
+
   if (pictureTaken) {
     return (
       <View
@@ -100,7 +130,11 @@ export default function App() {
                   Retake Picture
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() =>
+                  getImages({ variables: { imageBase64: imageResult } })
+                }
+              >
                 <Text
                   style={[styles.baseButton, { backgroundColor: '#1DB954' }]}
                 >

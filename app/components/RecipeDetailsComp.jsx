@@ -8,7 +8,8 @@ import StartCookingButton from '../components/StartCookingButton'
 import CookingStepButton from '../components/CookingStepButton'
 import CookingSteps from '../components/CookingSteps'
 
-export default RecipeDetails = (props) => {
+export default RecipeDetails = props => {
+  const { recipe } = props
 
     const [isStarted, setIsStarted] = useState(false)
 
@@ -51,6 +52,6 @@ export default RecipeDetails = (props) => {
                 </View>
                 
             </View>
-        </ImageBackground>
-    )
+    </ImageBackground>
+  )
 }

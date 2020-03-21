@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, ImageBackground, ScrollView, Animated, Easing } from 'react-native'
+import {
+  View,
+  Text,
+  ImageBackground,
+  ScrollView,
+  Animated,
+  Easing
+} from 'react-native'
 import RecipeCard from '../components/RecipeCard'
 import Styles from '../Styles'
 import LottieView from 'lottie-react-native'
@@ -38,6 +45,6 @@ export default RecipeDetails = props => {
                     </View>
                 </ScrollView>
             </View>
-        </ImageBackground>
+      </ImageBackground>
     )
 }
