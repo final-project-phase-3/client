@@ -51,5 +51,21 @@ export default StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 10,
         elevation: 7
+    },
+
+    RecipeEquipmentsCard:{
+        width : '100%', 
+        backgroundColor : 'white', 
+        borderRadius : 24, 
+        marginVertical : 10, 
+        padding : 20,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 10,
+            height: 10
+        },
+        shadowOpacity: 1,
+        shadowRadius: 10,
+        elevation: 7
     }
 })
