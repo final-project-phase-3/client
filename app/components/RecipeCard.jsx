@@ -8,9 +8,9 @@ export default RecipeDetails = (props) => {
     return(
         <View style={Styles.RecipeCard} >
             <TouchableOpacity style={{height : "100%", width : '100%'}}>
-                <ImageBackground blurRadius={3} source={require('../assets/rendang.jpg')} style={{width: '100%', height: '107%'}} imageStyle={{borderRadius : 26}}>
-                    <View style={{height : "100%", width : '100%', justifyContent : "center", alignItems : "center"}} >
-                        <Text style={{color : "#EFEFEF"}}>APPLE STRUDLES</Text>
+                <ImageBackground blurRadius={3} source={{uri : props.recipe.url}} style={{width: '100%', height: '100%'}} imageStyle={{borderRadius : 26}}>
+                    <View style={Styles.RecipeCardView} >
+                        <Text style={Styles.RecipeCardText}>{props.recipe.name}</Text>
                     </View>
                 </ImageBackground>
             </TouchableOpacity>

@@ -1,36 +1,19 @@
-<<<<<<< Updated upstream
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-
-import TabNavigator from './navigations/HomeTabNavigation'
-=======
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import TabNavigator  from './navigations/HomeTabNavigation';
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+import * as Font from 'expo-font'
 
 export default function App() {
+
+  useEffect(()=>{
+    Font.loadAsync({
+      'reem-kufi' : require('./assets/fonts/ReemKufi-Regular.ttf')
+    })
+  },[])
+
   return (
     <NavigationContainer>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-      <TabNavigator />
-=======
       <TabNavigator/>
->>>>>>> Stashed changes
-=======
-      <TabNavigator/>
->>>>>>> Stashed changes
-=======
-      <TabNavigator/>
->>>>>>> Stashed changes
     </NavigationContainer>
-  )
+  );
 }
