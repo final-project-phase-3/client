@@ -1,13 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 function Ingredients(props) {
+  const [status, setStatus] = useState(false)
   return (
     <View style={styles.imageContainer}>
-      <TouchableOpacity onLongPress={() => console.log('HEHEHE')}>
+      <TouchableOpacity onPress={() => setStatus(!status)}>
         <Image
-          style={styles.image}
+          style={[styles.image, status && { opacity: 0.5 }]}
           source={{
             uri:
               'https://blog.regopantes.com/wp-content/uploads/2019/05/manfaat-wortel-resepkoki-id.jpg'
@@ -21,12 +22,14 @@ function Ingredients(props) {
           }}
         >
           <Text style={styles.textInfo}>Ingredients</Text>
-          {/* <Ionicons
-            name="ios-checkmark-circle"
-            size={18}
-            color="#efefef"
-            style={{ marginLeft: 5 }}
-          /> */}
+          {status && (
+            <Ionicons
+              name="ios-checkmark-circle"
+              size={18}
+              color="#efefef"
+              style={{ marginLeft: 5 }}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>
