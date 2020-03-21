@@ -31,11 +31,11 @@ export default RecipeDetails = (props) => {
                             <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} Coconut Milk</Text>
                             <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} Sweet Soy Sauce</Text>
                         </View>
-                            <TouchableNativeFeedback>
                         <View style={{...Styles.Shadows, width : '100%', backgroundColor : 'white', borderRadius : 24, marginVertical : 10, padding : 20}}>
+                            <TouchableNativeFeedback>
                                 <Text>Start</Text>
-                        </View>
                             </TouchableNativeFeedback>
+                        </View>
                     </ScrollView>
                 </View>
                 
