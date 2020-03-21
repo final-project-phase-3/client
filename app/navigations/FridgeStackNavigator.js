@@ -18,7 +18,16 @@ export default function FridgeStackNavigation() {
         headerTintColor: '#EFEFEF'
       }}
     >
-      <Stack.Screen name="Fridge" component={Home} />
+      <Stack.Screen
+        name="Fridge"
+        options={{
+          headerTitleStyle: {
+            fontFamily: 'reem-kufi',
+            fontWeight: '200'
+          }
+        }}
+        component={Home}
+      />
       <Stack.Screen name="SearchResult" component={SearchResult} />
       <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
       <Stack.Screen
