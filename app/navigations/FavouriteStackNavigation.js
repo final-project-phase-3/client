@@ -14,7 +14,12 @@ export default function FavouriteStackNavigation () {
             },
             headerTintColor : "#EFEFEF"
         }}>
-            <Stack.Screen name="Favourites" component={Favourites}/>
+            <Stack.Screen name="Favourites" component={Favourites} options={{
+                headerTitleStyle: {
+                    fontFamily: "reem-kufi",
+                    fontWeight: "200"
+                  }
+            }}/>
             <Stack.Screen name="FavRecipeDetails" component={FavRecipeDetails}/>
         </Stack.Navigator>
     )
