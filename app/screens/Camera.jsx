@@ -9,14 +9,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     padding: 5,
     color: '#EFEFEF',
-    marginRight: 5
+    marginRight: 5,
+    fontFamily: 'reem-kufi'
   },
   confirmText: {
     textAlign: 'center',
     fontSize: 20,
     marginBottom: 15,
     color: '#1DB954',
-    fontWeight: 'bold'
+    fontFamily: 'reem-kufi'
   }
 })
 

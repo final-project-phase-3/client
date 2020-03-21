@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
+import { useDispatch, useSelector } from 'react-redux'
 
-function Ingredients(props) {
+import { addChosen, removeChosen } from '../store/actions/ingredientActions'
+
+function Ingredients({ ingredient }) {
+  const dispatch = useDispatch()
+  const { chosenIngredients } = useSelector(state => {
+    return state
+  })
+  const ingredientIndex = chosenIngredients.findIndex(
+    ing => ing._id === ingredient._id
+  )
+  console.log(ingredientIndex)
+
+  const handleSelect = () => {
+    if (ingredientIndex > -1) {
+      dispatch(removeChosen(ingredient))
+    } else {
+      dispatch(addChosen(ingredient))
+    }
+  }
+
   return (
     <View style={styles.imageContainer}>
-      <TouchableOpacity onLongPress={() => console.log('HEHEHE')}>
+      <TouchableOpacity onPress={() => handleSelect()}>
         <Image
-          style={styles.image}
+          style={[styles.image, ingredientIndex > -1 && { opacity: 0.5 }]}
           source={{
-            uri:
-              'https://blog.regopantes.com/wp-content/uploads/2019/05/manfaat-wortel-resepkoki-id.jpg'
+            uri: ingredient.image_url
           }}
         />
         <View
@@ -20,13 +39,15 @@ function Ingredients(props) {
             justifyContent: 'center'
           }}
         >
-          <Text style={styles.textInfo}>Ingredients</Text>
-          {/* <Ionicons
-            name="ios-checkmark-circle"
-            size={18}
-            color="#efefef"
-            style={{ marginLeft: 5 }}
-          /> */}
+          <Text style={styles.textInfo}>{ingredient.name}</Text>
+          {ingredientIndex > -1 && (
+            <Ionicons
+              name="ios-checkmark-circle"
+              size={18}
+              color="#efefef"
+              style={{ marginLeft: 5 }}
+            />
+          )}
         </View>
       </TouchableOpacity>
     </View>
@@ -58,8 +79,9 @@ const styles = StyleSheet.create({
     color: '#efefef',
     textAlign: 'center',
     fontSize: 14,
-    fontWeight: '700',
-    marginTop: 4
+    fontWeight: '200',
+    marginTop: 4,
+    fontFamily: 'reem-kufi'
   }
 })
 

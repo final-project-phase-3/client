@@ -12,10 +12,21 @@ import { Ionicons } from '@expo/vector-icons'
 import ActionButton from 'react-native-action-button'
 
 import Fridge from '../components/Fridge'
+import { useSelector } from 'react-redux'
 
 function Home() {
-  const [chosenIngredients, setChosen] = useState([])
   const { navigate } = useNavigation()
+  const { chosenIngredients } = useSelector(state => {
+    return state
+  })
+
+  const handleSearch = () => {
+    if (chosenIngredients.length < 1) {
+      alert('Please select your ingredients to get recipes recommendation')
+    } else {
+      navigate('SearchResult')
+    }
+  }
 
   return (
     <ImageBackground
@@ -24,7 +35,7 @@ function Home() {
     >
       <View style={styles.mainContainer}>
         <View style={styles.headContainer}>
-          <Text style={styles.textTitle}>Your Ingredients</Text>
+          <Text style={[styles.textTitle]}>Your Ingredients</Text>
           <TouchableOpacity
             style={styles.uploadBtn}
             onPress={() => navigate('Camera')}
@@ -50,7 +61,7 @@ function Home() {
           elevation: 9
         }}
         onPress={() => {
-          console.log('hi')
+          handleSearch()
         }}
         renderIcon={() => (
           <Ionicons name="ios-search" size={20} color="#efefef" />
@@ -78,8 +89,9 @@ const styles = StyleSheet.create({
   },
   textTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
-    color: '#666565'
+    fontWeight: '200',
+    color: '#666565',
+    fontFamily: 'reem-kufi'
   },
   uploadBtn: {
     flexDirection: 'row',
@@ -96,7 +108,8 @@ const styles = StyleSheet.create({
   textBtn: {
     marginLeft: 6,
     color: '#efefef',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'reem-kufi'
   }
 })
 

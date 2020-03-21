@@ -6,7 +6,7 @@ export default StyleSheet.create({
     RecipeCard : {
         backgroundColor : "#1db954", 
         marginHorizontal : 10, 
-        marginVertical: 20,
+        marginVertical: 10,
         borderRadius : 28, 
         height : 200, 
         justifyContent : "center", 
