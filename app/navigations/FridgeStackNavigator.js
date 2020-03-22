@@ -29,7 +29,7 @@ export default function FridgeStackNavigation() {
         component={Home}
       />
       <Stack.Screen name="SearchResult" component={SearchResult} />
-      <Stack.Screen name="RecipeDetails" component={RecipeDetails} />
+      <Stack.Screen name="FavRecipeDetails" component={RecipeDetails} />
       <Stack.Screen
         name="Camera"
         component={Camera}

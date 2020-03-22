@@ -3,23 +3,40 @@ import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Camera } from 'expo-camera'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useLazyQuery } from '@apollo/react-hooks'
+import { useLazyQuery, useMutation } from '@apollo/react-hooks'
 import ImgToBase64 from 'react-native-image-base64'
+import LottieView from 'lottie-react-native'
+import axios from 'axios'
 
-import { PROCESS_IMAGE } from '../graphql'
+import { PROCESS_IMAGE, GET_USER } from '../graphql'
 
 const styles = StyleSheet.create({
+  outerLayer: {
+    backgroundColor: '#1DB954',
+    height: '100%',
+    position: 'relative'
+  },
+  innerLayer: {
+    flex: 2,
+    backgroundColor: '#EFEFEF',
+    marginTop: 30,
+    marginBottom: 30,
+    marginLeft: 10,
+    marginRight: 10,
+    padding: 30
+  },
   baseButton: {
     textAlign: 'center',
     padding: 5,
     color: '#EFEFEF',
-    marginRight: 5,
-    fontFamily: 'reem-kufi'
+    marginHorizontal: 5,
+    fontFamily: 'reem-kufi',
+    borderRadius: 5
   },
   confirmText: {
     textAlign: 'center',
-    fontSize: 20,
-    marginBottom: 15,
+    fontSize: 18,
+    marginBottom: 5,
     color: '#1DB954',
     fontFamily: 'reem-kufi'
   }
@@ -31,25 +48,51 @@ export default function App() {
   const [camera, setCamera] = useState(null)
   const [imageResult, setImageResult] = useState('')
   const [pictureTaken, setPictureTaken] = useState(null)
-  const { navigate, goBack } = useNavigation()
+  const { goBack, navigate } = useNavigation()
+  const [loadingImage, setLoading] = useState(false)
+  const [getImages, { data }] = useMutation(PROCESS_IMAGE, {
+    onCompleted: () => setLoading(false),
+    refetchQueries: [{ query: GET_USER }]
+  })
 
-  const [getImages, { called, loading, error, data }] = useLazyQuery(
-    PROCESS_IMAGE
-  )
+  const handleAxios = formData => {
+    setLoading(true)
+    axios({
+      method: 'post',
+      url: 'http://192.168.100.8:3001/processimage',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        token:
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzVlNjQyOGIxNWM2NDlhYjA0ZTQzNiIsImlhdCI6MTU4NDc4NTIxNH0.yiUk1nxj7q5EDZ_04D9IcIndbyd1mAtcYBBk0YhXcKE'
+      },
+      data: formData
+    })
+      .then(response => {
+        console.log(response.data, 'INI RESPONSE DATA')
+        setImageResult(response.data.imageUrl)
+        getImages({ variables: { imageUrl: response.data.imageUrl } })
+      })
+      .catch(err => console.log(err, 'INI ERROR AXIOS ANJENG'))
+  }
+
+  const handlePhoto = photo => {
+    let fileName = photo.substring(photo.lastIndexOf('/') + 1)
+    let fileType = photo.substring(photo.lastIndexOf('.') + 1)
+    let formData = new FormData()
+    formData.append('image', {
+      uri: photo,
+      name: `${fileName}`,
+      type: `image/${fileType}`
+    })
+    handleAxios(formData)
+  }
 
   const takePicture = async () => {
     if (camera) {
       let photo = await camera.takePictureAsync({ base64: true })
+      console.log(photo.name, photo.type, photo.uri)
       setPictureTaken(photo.uri)
-
-      // console.log(photo.base64)
-      setImageResult(`data:image/jpeg;base64,${photo.base64}`)
-
-      // ImgToBase64.getBase64String(`${photo.uri}`)
-      //   .then(base64Str => {
-      //     console.log(base64Str)
-      //   })
-      //   .catch(err => console.log(err))
+      handlePhoto(photo.uri)
     }
   }
 
@@ -75,47 +118,24 @@ export default function App() {
     )
   }
 
-  if (called && loading) {
+  if (pictureTaken && !loadingImage) {
     return (
-      <View>
-        <Text>Loading ... Saving your ingredients</Text>
-      </View>
-    )
-  } else if (!loading && data) {
-    console.log(data)
-  } else if (!loading && error) {
-    console.log(error)
-  }
-
-  if (pictureTaken) {
-    return (
-      <View
-        style={{
-          backgroundColor: '#1DB954',
-          height: '100%',
-          position: 'relative'
-        }}
-      >
-        <View
-          style={{
-            flex: 2,
-            backgroundColor: '#EFEFEF',
-            marginTop: 30,
-            marginBottom: 30,
-            marginLeft: 10,
-            marginRight: 10,
-            padding: 30
-          }}
-        >
+      <View style={styles.outerLayer}>
+        <View style={styles.innerLayer}>
           <Text style={styles.confirmText}>Result Image</Text>
           <Image
             style={{ flex: 1.6, height: 500, width: 313, resizeMode: 'cover' }}
             source={{ uri: pictureTaken }}
           />
           <View style={{ flex: 0.4 }}>
-            <Text style={[styles.confirmText, { marginTop: 15 }]}>
-              Add to your Refrigerator?
-            </Text>
+            {data && (
+              <Text
+                style={[styles.confirmText, { marginTop: 10, fontSize: 14 }]}
+              >
+                Your Ingredients: {data.processImage.name}
+              </Text>
+            )}
+            <Text style={[styles.confirmText]}>Add to your Refrigerator?</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -130,11 +150,7 @@ export default function App() {
                   Retake Picture
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() =>
-                  getImages({ variables: { imageBase64: imageResult } })
-                }
-              >
+              <TouchableOpacity onPress={() => navigate('Fridge')}>
                 <Text
                   style={[styles.baseButton, { backgroundColor: '#1DB954' }]}
                 >
@@ -143,6 +159,21 @@ export default function App() {
               </TouchableOpacity>
             </View>
           </View>
+        </View>
+      </View>
+    )
+  } else if (loadingImage && pictureTaken) {
+    return (
+      <View style={styles.outerLayer}>
+        <View style={styles.innerLayer}>
+          <LottieView
+            source={require('../assets/animations/loadingAnimation.json')}
+            autoPlay
+            loop
+          />
+          <Text style={{ marginTop: 400, textAlign: 'center' }}>
+            Processing your image ...
+          </Text>
         </View>
       </View>
     )

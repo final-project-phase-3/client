@@ -1,11 +1,25 @@
 import { gql } from 'apollo-boost'
 
 export const PROCESS_IMAGE = gql`
-  query uploadImage($imageBase64: String) {
-    processImage(imageBase64: $imageBase64) {
+  mutation uploadImage($imageUrl: String) {
+    processImage(imageUrl: $imageUrl) {
       name
       imageUrl
       msg
+    }
+  }
+`
+
+export const GET_USER = gql`
+  query {
+    getUser {
+      username
+      email
+      refrigerator {
+        _id
+        name
+        image_url
+      }
     }
   }
 `
