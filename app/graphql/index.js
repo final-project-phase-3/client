@@ -6,6 +6,15 @@ export const PROCESS_IMAGE = gql`
       name
       imageUrl
       msg
+      tags
+    }
+  }
+`
+
+export const ADD_TO_FRIDGE = gql`
+  mutation addIngredient($name: String!, $image_url: String!, $tags: [String]) {
+    addToFridge(name: $name, image_url: $image_url, tags: $tags) {
+      _id
     }
   }
 `

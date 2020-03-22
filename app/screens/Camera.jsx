@@ -3,12 +3,11 @@ import { Text, View, TouchableOpacity, Image, StyleSheet } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
 import { Camera } from 'expo-camera'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { useLazyQuery, useMutation } from '@apollo/react-hooks'
-import ImgToBase64 from 'react-native-image-base64'
+import { useMutation } from '@apollo/react-hooks'
 import LottieView from 'lottie-react-native'
 import axios from 'axios'
 
-import { PROCESS_IMAGE, GET_USER } from '../graphql'
+import { PROCESS_IMAGE, GET_USER, ADD_TO_FRIDGE } from '../graphql'
 
 const styles = StyleSheet.create({
   outerLayer: {
@@ -51,7 +50,9 @@ export default function App() {
   const { goBack, navigate } = useNavigation()
   const [loadingImage, setLoading] = useState(false)
   const [getImages, { data }] = useMutation(PROCESS_IMAGE, {
-    onCompleted: () => setLoading(false),
+    onCompleted: () => setLoading(false)
+  })
+  const [addIngredient] = useMutation(ADD_TO_FRIDGE, {
     refetchQueries: [{ query: GET_USER }]
   })
 
@@ -93,6 +94,20 @@ export default function App() {
       console.log(photo.name, photo.type, photo.uri)
       setPictureTaken(photo.uri)
       handlePhoto(photo.uri)
+    }
+  }
+
+  const savePicture = item => {
+    console.log(item)
+    if (item) {
+      navigate('Fridge')
+      addIngredient({
+        variables: {
+          name: item.processImage.name,
+          image_url: item.processImage.imageUrl,
+          tags: item.processImage.tags
+        }
+      })
     }
   }
 
@@ -150,7 +165,7 @@ export default function App() {
                   Retake Picture
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigate('Fridge')}>
+              <TouchableOpacity onPress={() => savePicture(data)}>
                 <Text
                   style={[styles.baseButton, { backgroundColor: '#1DB954' }]}
                 >
