@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native'
+import {
+  View,
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity
+} from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
+import { Image } from 'react-native-elements'
 
 import { addChosen, removeChosen } from '../store/actions/ingredientActions'
 
@@ -13,7 +20,6 @@ function Ingredients({ ingredient }) {
   const ingredientIndex = chosenIngredients.findIndex(
     ing => ing._id === ingredient._id
   )
-  console.log(ingredientIndex)
 
   const handleSelect = () => {
     if (ingredientIndex > -1) {
@@ -31,6 +37,7 @@ function Ingredients({ ingredient }) {
           source={{
             uri: ingredient.image_url
           }}
+          PlaceholderContent={<ActivityIndicator size="small" color="white" />}
         />
         <View
           style={{

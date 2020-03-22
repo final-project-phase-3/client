@@ -10,36 +10,14 @@ import { useSelector } from 'react-redux'
 
 import RecipeCard from '../components/RecipeCard'
 import TagIngredient from '../components/TagIngredient'
+import recipesMockup from '../recipesMockup'
 
 export default SearchResult = props => {
   const { chosenIngredients } = useSelector(state => {
     return state
   })
 
-  const favouriteList = [
-    {
-      name: 'Beef Rendang',
-      url:
-        'https://s3media.freemalaysiatoday.com/wp-content/uploads/2019/06/rendang-lifestyle-020619-1.jpg'
-    },
-    {
-      name: 'Chicken Opor',
-      url:
-        'https://cdn2.tstatic.net/palu/foto/bank/images/opor-ayam-lezat-untuk-sajian-lebaran.jpg'
-    },
-    {
-      name: 'Spaghetti Bolognese',
-      url:
-        'https://thecozyapron.com/wp-content/uploads/2019/05/spaghetti-bolognese_thecozyapron_1.jpg'
-    },
-    {
-      name: 'Sayur Asem',
-      url:
-        'https://cdns.klimg.com/merdeka.com/i/w/news/2018/04/25/968568/670x335/5-cara-masak-sayur-asem-yang-enak-segar-dan-mudah-ala-sunda-betawi-serta-jawa-rev-1.jpg'
-    }
-  ]
-
-  const [favourites, setFavourites] = useState(favouriteList)
+  const [favourites, setFavourites] = useState(recipesMockup())
   return (
     <ImageBackground
       source={require('../assets/SearchBackground.png')}
