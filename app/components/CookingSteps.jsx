@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Dimensions } from 'react-native'
 import SideSwipe from 'react-native-sideswipe'
+import LottieView from 'lottie-react-native'
 
 import Styles from '../Styles'
 import StepsCard from './StepsCard'
@@ -15,16 +16,18 @@ function EquipAndIngredients(props){
     const { recipe } = props
 
     return(
-        <ScrollView 
-        horizontal 
-        showsHorizontalScrollIndicator={false}
-        scrollEventThrottle={10}
-        pagingEnabled
-        >
-            <StepsCard/>
-            <StepsCard/>
-            <StepsCard/>
-        </ScrollView>
+        <>
+            <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={10}
+            pagingEnabled
+            >
+                <StepsCard/>
+                <StepsCard/>
+                <StepsCard/>
+            </ScrollView>
+        </>
     )
 } 
 
