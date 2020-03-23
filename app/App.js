@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import TabNavigator from './navigations/HomeTabNavigation'
 import * as Font from 'expo-font'
 import { Provider } from 'react-redux'
 import { ApolloProvider } from '@apollo/react-hooks'
 
+import RootNavigation from './navigations/RootNavigation'
 import store from './store'
 import client from './config/graphql'
 
@@ -25,7 +25,7 @@ export default function App() {
       { fontReady && 
       <ApolloProvider client={client}>
         <NavigationContainer>
-          <TabNavigator />
+          <RootNavigation />
         </NavigationContainer>
       </ApolloProvider>
       }
