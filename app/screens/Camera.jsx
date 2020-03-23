@@ -90,7 +90,11 @@ export default function App() {
 
   const takePicture = async () => {
     if (camera) {
+<<<<<<< HEAD
       let photo = await camera.takePictureAsync({ base64: true, quality : 0.5 })
+=======
+      let photo = await camera.takePictureAsync({ base64: true, quality: 0.5 })
+>>>>>>> add login screen
       console.log(photo.name, photo.type, photo.uri)
       setPictureTaken(photo.uri)
       handlePhoto(photo.uri)
@@ -201,6 +205,7 @@ export default function App() {
         ref={ref => {
           setCamera(ref)
         }}
+        autoFocus={"on"}
       >
         <View
           style={{
