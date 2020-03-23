@@ -17,7 +17,7 @@ import { GET_RECIPES_NAME } from '../graphql/index'
 
 export default SearchResult = props => {
   const { chosenIngredients } = useSelector(state => {
-    return state
+    return state.ingredientsReducers
   })
 
   const { data, error, loading } = useQuery(GET_RECIPES_NAME, {

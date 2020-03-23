@@ -22,10 +22,10 @@ export default function HomeTabNavigation() {
         }
       })}
       tabBarOptions={{
-        inactiveBackgroundColor: '#1DB954',
-        activeBackgroundColor: '#efefef',
-        activeTintColor: '#1DB954',
-        inactiveTintColor: '#efefef'
+        inactiveBackgroundColor: '#efefef',
+        activeBackgroundColor: '#1DB954',
+        activeTintColor: '#efefef',
+        inactiveTintColor: '#1DB954'
       }}
     >
       <Tab.Screen name="Fridge" component={FridgeStackNavigation} />

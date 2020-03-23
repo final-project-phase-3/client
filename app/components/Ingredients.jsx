@@ -15,7 +15,7 @@ import { addChosen, removeChosen } from '../store/actions/ingredientActions'
 function Ingredients({ ingredient }) {
   const dispatch = useDispatch()
   const { chosenIngredients } = useSelector(state => {
-    return state
+    return state.ingredientsReducers
   })
   const ingredientIndex = chosenIngredients.findIndex(
     ing => ing._id === ingredient._id

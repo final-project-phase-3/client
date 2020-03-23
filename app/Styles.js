@@ -66,7 +66,7 @@ export default StyleSheet.create({
     elevation: 7
   },
   nutritionalValueButton : {
-        backgroundColor : '#1CA14B', 
+        backgroundColor : 'rgba(231,76,60,1)', 
         height:"10%", 
         justifyContent : 'center', 
         alignItems :'center', 

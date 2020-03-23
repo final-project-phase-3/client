@@ -11,21 +11,16 @@ import RecipeCard from '../components/RecipeCard'
 import Styles from '../Styles'
 import LottieView from 'lottie-react-native'
 import recipesMockup from '../recipesMockup'
+import { useQuery } from '@apollo/react-hooks'
 
-export default RecipeDetails = props => {
-    const favouriteList = recipesMockup()
-    
-    const [favourites, setFavourites] = useState(favouriteList)
-    const [loading, setLoading] = useState(true)
+import { GET_FAV } from '../graphql'
 
-    useEffect(()=>{
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000);
-    })
-    
-    
+export default RecipeDetails = ( props ) => {
+    const { data, error, loading } = useQuery(GET_FAV)
+
     if(loading) return <LottieView source={require('../assets/animations/loadingAnimation.json')} autoPlay loop/>
+
+    else if(error) return <LottieView source={require('../assets/animations/errorAnimation.json')} autoPlay loop/>
     
     else return(
         <ImageBackground source={require('../assets/SearchBackground.png')} style={{width: '100%', height: '100%'}}>
@@ -36,7 +31,7 @@ export default RecipeDetails = props => {
                             <Text style={Styles.TitleText}>❤️ Your favourites!</Text>
                         </View>
                         {
-                            favourites.map(recipe => {
+                            data.getFav.map(recipe => {
                                 return (
                                     <RecipeCard recipe={recipe}/>
                                 )

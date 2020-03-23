@@ -19,6 +19,60 @@ export const ADD_TO_FRIDGE = gql`
   }
 `
 
+export const ADD_TO_FAVOURITE = gql`
+  mutation addToFav(
+    $idAPI: String!, 
+    $title: String!,
+    $image: String,
+    $cookingSteps: [Object], 
+    $usedIngredients : [Object]
+    $missedIngredients : [Object]
+    $nutritions: [Object],
+    $readyInMinutes : Int
+    ) {
+      addToFav(
+        idAPI : $idAPI,
+        title : $title,
+        image : $image 
+        usedIngredients : $usedIngredients 
+        missedIngredients : $missedIngredients 
+        cookingSteps : $cookingSteps,
+        nutritions : $nutritions,
+        readyInMinutes : $readyInMinutes
+        ) {
+          _id
+        }
+    }
+`
+
+export const REMOVE_FAVOURITE = gql`
+  mutation removeFromFav(
+      $idAPI : String!
+    ) {
+      removeFromFav(
+        idAPI : $idAPI,
+        ) {
+          title
+        }
+    }
+`
+
+export const GET_FAV = gql`
+  query{
+    getFav{
+      _id
+      idAPI
+      title
+      image
+      usedIngredients
+      missedIngredients
+      nutritions
+      cookingSteps
+      readyInMinutes
+    }
+  }
+`
+
 export const GET_USER = gql`
   query {
     getUser {
@@ -35,6 +89,7 @@ export const GET_USER = gql`
 export const GET_RECIPES_NAME = gql`
   query getRecipes($ingredients:[String]){
     getRecipes(ingredients:$ingredients){
+      id
       title
       image
       usedIngredients{
