@@ -7,11 +7,10 @@ function StepsCard(props){
     return(
         <View style={{...Styles.RecipeEquipmentsCard, maxWidth:'100%', padding : 40}}>
             <Text style={{fontSize : 20, fontFamily : 'reem-kufi', marginBottom : 10}}>
-                Step 1.
+                Step {props.index+1}.
             </Text>
             <Text style={{fontSize : 18, fontFamily : 'reem-kufi'}}>
-                Cincang semua bahan bumbu halus kemudian blender sampai halus.
-                Jika perlu tambahkan sekitar 50 ml santan untuk mempermudah proses penghancuran.
+                {props.step}
             </Text>
         </View>
     )

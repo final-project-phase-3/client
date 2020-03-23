@@ -3,6 +3,7 @@ import { View,
     Text } from 'react-native'
 import Styles from '../Styles'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { Ionicons } from '@expo/vector-icons'
 
 function StartCookingButton(props) {
 
@@ -48,7 +49,8 @@ function StartCookingButton(props) {
                             <Text style={{...Styles.TitleText, 
                                 marginTop : 0, 
                                 fontSize : 30, 
-                                color : "#efefef"}}>Next
+                                color : "#efefef"}}>
+                                    <Ionicons name="ios-camera" size={40} color="#efefef" />
                             </Text>
                     </View>
                 </TouchableOpacity>

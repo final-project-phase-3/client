@@ -24,6 +24,13 @@ const RecipeDetails = props => {
         </View>
       </View>
     )
+  } else if(error){
+    console.log('---------------',error,'--------------------------')
+    return(
+      <View>
+        <Text>{error}</Text>
+      </View>
+    )
   } else {
     return (
       <ScrollView>
