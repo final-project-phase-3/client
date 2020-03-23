@@ -60,11 +60,11 @@ export default function App() {
     setLoading(true)
     axios({
       method: 'post',
-      url: 'http://192.168.100.8:3001/processimage',
+      url: 'http://192.168.77.207:3001/processimage',
       headers: {
         'Content-Type': 'multipart/form-data',
         token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzVlNjQyOGIxNWM2NDlhYjA0ZTQzNiIsImlhdCI6MTU4NDc4NTIxNH0.yiUk1nxj7q5EDZ_04D9IcIndbyd1mAtcYBBk0YhXcKE'
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzc3MTNlMGZkNmEzNmY2NTZkNjA4NyIsImlhdCI6MTU4NDg4NzEzOH0.hrPWmDySOnIU4Tn4xiUbcWmXUhZQ5PmdaGyizXi028E'
       },
       data: formData
     })
@@ -90,7 +90,7 @@ export default function App() {
 
   const takePicture = async () => {
     if (camera) {
-      let photo = await camera.takePictureAsync({ base64: true })
+      let photo = await camera.takePictureAsync({ base64: true, quality : 0.5 })
       console.log(photo.name, photo.type, photo.uri)
       setPictureTaken(photo.uri)
       handlePhoto(photo.uri)

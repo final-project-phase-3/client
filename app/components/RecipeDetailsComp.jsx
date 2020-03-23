@@ -8,15 +8,15 @@ import EquipAndIngredients from '../components/EquipAndIngredients'
 import StartCookingButton from '../components/StartCookingButton'
 import CookingStepButton from '../components/CookingStepButton'
 import CookingSteps from '../components/CookingSteps'
+import NutritionalValue from './NutritionalValue'
 
 export default RecipeDetails = props => {
   const { recipe } = props
 
     const [isStarted, setIsStarted] = useState(false)
+    const [showingNutrition, setShowingNutrition] = useState(false)
     const [animate, setAnimate] = useState(false)
 
-    const { recipe } = props
-    
     function handleClickStart(){
         setIsStarted(!isStarted)
         setAnimate(true)
@@ -25,8 +25,12 @@ export default RecipeDetails = props => {
         }, 1500);
     }
 
+    function handleClickNutrition(){
+        setShowingNutrition(!showingNutrition)
+        console.log(showingNutrition)
+    }
+
     useEffect(()=>{
-        console.log(isStarted)
         return ()=>{
             setIsStarted(!isStarted)
         }
@@ -37,7 +41,7 @@ export default RecipeDetails = props => {
     return(
         <ImageBackground source={require('../assets/SearchBackground.png')} style={{width: '100%', height: '100%'}}>
             <View style={{alignItems : 'center', flex : 1}}>
-                <View style={{flex : 0.75, width : '100%', marginBottom : 10}}>
+                <View style={{width : '100%', marginBottom : 10}}>
                     <Text style={{...Styles.TitleText, marginTop : 10}}>{recipe.title}</Text>
                 </View>
                 <View style={{flex : 2.5, width : '100%', paddingHorizontal : 10, marginBottom : 10}}>
@@ -46,10 +50,15 @@ export default RecipeDetails = props => {
                 <View style={{flex : 4.5, width : '100%', paddingHorizontal : 10}}>
                     <ScrollView>
                         
-                        { !isStarted &&
+                        { !isStarted && !showingNutrition &&
                             <>
                                 <EquipAndIngredients recipe={ recipe }/>
                                 <StartCookingButton handleClickStart={handleClickStart}/>
+                            </>
+                        }
+                        { !isStarted && showingNutrition &&
+                            <>
+                                <NutritionalValue recipe={ recipe }/>
                             </>
                         }
                         { isStarted &&
@@ -61,9 +70,17 @@ export default RecipeDetails = props => {
                                 }
                             </>
                         }
-                        
                     </ScrollView>
                 </View>
+                {!isStarted && 
+                    <View style={Styles.nutritionalValueButton}>
+                        <TouchableOpacity onPress={handleClickNutrition}>
+                            { !showingNutrition && <Text style={{...Styles.TitleText, color : "white", fontSize : 12}}>Nutritional Values</Text>}
+                            { showingNutrition && <Text style={{...Styles.TitleText, color : "white", fontSize : 12}}>Recipe</Text>}
+                        </TouchableOpacity>
+                    </View>
+                }
+                
                 
             </View>
         </ImageBackground>

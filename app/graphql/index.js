@@ -32,3 +32,32 @@ export const GET_USER = gql`
     }
   }
 `
+export const GET_RECIPES_NAME = gql`
+  query getRecipes($ingredients:[String]){
+    getRecipes(ingredients:$ingredients){
+      title
+      image
+      usedIngredients{
+        original
+      }
+      missedIngredients{
+        original
+      }
+      nutritions{
+        title
+        amount
+        unit
+      }
+      readyInMinutes
+      cookingSteps{
+        step
+        equipment{
+          name
+        }
+        ingredients{
+          name
+        }
+      }
+    }
+  }
+`
