@@ -73,17 +73,17 @@ export default RecipeDetailScreen = props => {
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginHorizontal: 10, flexDirection : 'row' }}>
           <TouchableNativeFeedback onPress={() => handleShare()}>
             <MaterialIcons
               name="share"
-              style={{ fontSize: 30, color: 'white' }}
+              style={{ fontSize: 30, color: 'white', marginHorizontal : 10 }}
             />
           </TouchableNativeFeedback>
           <TouchableNativeFeedback onPress={() => handleDeleteFav()}>
             <MaterialIcons
               name="delete"
-              style={{ fontSize: 30, color: 'white' }}
+              style={{ fontSize: 30, color: 'white', marginHorizontal : 10 }}
             />
           </TouchableNativeFeedback>
         </View>
