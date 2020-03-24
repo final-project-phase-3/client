@@ -6,7 +6,7 @@ import { TouchableNativeFeedback } from 'react-native-gesture-handler'
 import { View } from 'native-base'
 import { useMutation } from '@apollo/react-hooks'
 import { REMOVE_FAVOURITE, GET_FAV } from '../graphql'
-import { Linking } from 'react-native'
+import { Linking } from 'expo'
 
 export default RecipeDetailScreen = props => {
   const { params } = props.route
@@ -49,9 +49,24 @@ export default RecipeDetailScreen = props => {
       { cancelable: true }
     )
   }
-
-  function handleShare() {
-    const text = 'coba dulu'
+  console.log(params.recipe)
+  function handleShare(){
+    console.log(params.recipe)
+    const msg = params.recipe
+    const text = encodeURI(
+      'Hey, I scanned my fridge with AI and got this recipe!\n\n' +
+      `*${msg.title}*\n\n` +
+      `Cooking Time :\n${msg.readyInMinutes} minutes\n\n` +
+      `Ingredients used : \n${msg.usedIngredients.map(el => {
+        return `- ${el.original}`
+      }).concat(msg.missedIngredients.map(el1 => {
+        return `- ${el1.original}`
+      })).join('\n')}\n\n`+
+      `Cooking Steps :\n${msg.cookingSteps.map((el,i) => {
+        return `${i + 1}. ${el.step}`
+      }).join(`\n\n`)}`
+    )
+    
     Linking.openURL(`whatsapp://send?text=${text}&phone=6281223131600`)
   }
 

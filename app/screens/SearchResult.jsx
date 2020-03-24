@@ -19,10 +19,13 @@ export default SearchResult = props => {
   const { chosenIngredients } = useSelector(state => {
     return state.ingredientsReducers
   })
-
-  const { data, error, loading } = useQuery(GET_RECIPES_NAME, {
+  const [error,setError] = useState(false)
+  const { data,loading } = useQuery(GET_RECIPES_NAME, {
     variables: {
       ingredients: chosenIngredients.map(el => el.name)
+    },
+    onError: () => {
+      setError(true)
     }
   })
 
@@ -32,7 +35,7 @@ export default SearchResult = props => {
   // }
 
   const [favourites, setFavourites] = useState(recipesMockup())
-  if (!loading)
+  if (data&&!loading)
     return (
       <ImageBackground
         source={require('../assets/SearchBackground.png')}
@@ -137,7 +140,7 @@ export default SearchResult = props => {
             }}
           >
             <LottieView
-              source={require('../assets/animations/loadingAnimation.json')}
+              source={require('../assets/animations/recipeSearchingAnimation.json')}
               autoPlay
               loop
             />

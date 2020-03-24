@@ -61,7 +61,7 @@ export default function App() {
     setLoading(true)
     axios({
       method: 'post',
-      url: `${key.BASE_URL}/processimage`,
+      url: `${key.BASE_URL}:3001/processimage`,
       headers: {
         'Content-Type': 'multipart/form-data',
         token: key.devToken
@@ -73,7 +73,7 @@ export default function App() {
         setImageResult(response.data.imageUrl)
         getImages({ variables: { imageUrl: response.data.imageUrl } })
       })
-      .catch(err => console.log(err, 'INI ERROR AXIOS ANJENG'))
+      .catch(err => console.log(err.response, 'INI ERROR AXIOS ANJENG'))
   }
 
   const handlePhoto = photo => {
