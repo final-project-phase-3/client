@@ -115,7 +115,6 @@ export default SearchResult = props => {
         </View>
       </ImageBackground>
     )
-<<<<<<< HEAD
   } else
     return (
       <ImageBackground
@@ -152,43 +151,6 @@ export default SearchResult = props => {
         </View>
       </ImageBackground>
     )
-=======
-  } else return (
-    <ImageBackground
-      source={require('../assets/SearchBackground.png')}
-      style={{ width: '100%', height: '100%' }}
-    >
-      <View style={{ marginBottom: 5 }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 10,
-            fontSize: 24,
-            fontFamily: 'reem-kufi',
-            color: '#666565'
-          }}
-        >
-          Amazing recipes found
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          <LottieView
-            source={require('../assets/animations/loadingAnimation.json')}
-            autoPlay
-            loop
-          />
-          <Text style={{ marginTop: 400, textAlign: 'center' }}>
-            Finding your recipes ...
-          </Text>
-        </View>
-      </View>
-    </ImageBackground>
-  )
->>>>>>> few ui changes
 }
 
 const styles = StyleSheet.create({
