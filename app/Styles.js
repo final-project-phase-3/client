@@ -23,7 +23,7 @@ export default StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    padding : 10
+    padding: 10
   },
   RecipeCardText: {
     color: '#EFEFEF',
@@ -65,23 +65,23 @@ export default StyleSheet.create({
     shadowRadius: 10,
     elevation: 7
   },
-  nutritionalValueButton : {
-        backgroundColor : 'rgba(231,76,60,1)', 
-        height:"10%", 
-        justifyContent : 'center', 
-        alignItems :'center', 
-        padding : 15,
-        borderRadius: 999, 
-        position:"absolute", 
-        bottom : 15, 
-        right : 15,
-        shadowColor: '#000',
-        shadowOffset: {
-        width: 10,
-        height: 10
-        },
-        shadowOpacity: 1,
-        shadowRadius: 10,
-        elevation: 7
-    }
+  nutritionalValueButton: {
+    backgroundColor: 'rgba(231,76,60,1)',
+    height: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+    borderRadius: 999,
+    position: 'absolute',
+    bottom: 15,
+    right: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 10,
+      height: 10
+    },
+    shadowOpacity: 1,
+    shadowRadius: 10,
+    elevation: 7
+  }
 })

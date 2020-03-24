@@ -1,10 +1,11 @@
 import ApolloClient from 'apollo-boost'
 
+import key from './key'
+
 const client = new ApolloClient({
-  uri: 'http://192.168.77.207:4000',
+  uri: key.BASE_URL,
   headers: {
-    token:
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzc3MTNlMGZkNmEzNmY2NTZkNjA4NyIsImlhdCI6MTU4NDg4NzEzOH0.hrPWmDySOnIU4Tn4xiUbcWmXUhZQ5PmdaGyizXi028E'
+    token: key.devToken
   }
 })
 

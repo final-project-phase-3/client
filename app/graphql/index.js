@@ -21,45 +21,41 @@ export const ADD_TO_FRIDGE = gql`
 
 export const ADD_TO_FAVOURITE = gql`
   mutation addToFav(
-    $idAPI: String!, 
-    $title: String!,
-    $image: String,
-    $cookingSteps: [Object], 
-    $usedIngredients : [Object]
-    $missedIngredients : [Object]
-    $nutritions: [Object],
-    $readyInMinutes : Int
+    $idAPI: String!
+    $title: String!
+    $image: String
+    $cookingSteps: [Object]
+    $usedIngredients: [Object]
+    $missedIngredients: [Object]
+    $nutritions: [Object]
+    $readyInMinutes: Int
+  ) {
+    addToFav(
+      idAPI: $idAPI
+      title: $title
+      image: $image
+      usedIngredients: $usedIngredients
+      missedIngredients: $missedIngredients
+      cookingSteps: $cookingSteps
+      nutritions: $nutritions
+      readyInMinutes: $readyInMinutes
     ) {
-      addToFav(
-        idAPI : $idAPI,
-        title : $title,
-        image : $image 
-        usedIngredients : $usedIngredients 
-        missedIngredients : $missedIngredients 
-        cookingSteps : $cookingSteps,
-        nutritions : $nutritions,
-        readyInMinutes : $readyInMinutes
-        ) {
-          _id
-        }
+      _id
     }
+  }
 `
 
 export const REMOVE_FAVOURITE = gql`
-  mutation removeFromFav(
-      $idAPI : String!
-    ) {
-      removeFromFav(
-        idAPI : $idAPI,
-        ) {
-          title
-        }
+  mutation removeFromFav($idAPI: String!) {
+    removeFromFav(idAPI: $idAPI) {
+      title
     }
+  }
 `
 
 export const GET_FAV = gql`
-  query{
-    getFav{
+  query {
+    getFav {
       _id
       idAPI
       title
@@ -87,32 +83,41 @@ export const GET_USER = gql`
   }
 `
 export const GET_RECIPES_NAME = gql`
-  query getRecipes($ingredients:[String]){
-    getRecipes(ingredients:$ingredients){
+  query getRecipes($ingredients: [String]) {
+    getRecipes(ingredients: $ingredients) {
       id
       title
       image
-      usedIngredients{
+      usedIngredients {
         original
       }
-      missedIngredients{
+      missedIngredients {
         original
       }
-      nutritions{
+      nutritions {
         title
         amount
         unit
       }
       readyInMinutes
-      cookingSteps{
+      cookingSteps {
         step
-        equipment{
+        equipment {
           name
         }
-        ingredients{
+        ingredients {
           name
         }
       }
+    }
+  }
+`
+
+export const DELETE_INGREDIENT = gql`
+  mutation deleteIngredient($_id: String!) {
+    deleteFromFridge(_id: $_id) {
+      _id
+      username
     }
   }
 `

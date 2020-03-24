@@ -8,6 +8,7 @@ import LottieView from 'lottie-react-native'
 import axios from 'axios'
 
 import { PROCESS_IMAGE, GET_USER, ADD_TO_FRIDGE } from '../graphql'
+import key from '../config/key'
 
 const styles = StyleSheet.create({
   outerLayer: {
@@ -60,11 +61,10 @@ export default function App() {
     setLoading(true)
     axios({
       method: 'post',
-      url: 'http://192.168.77.207:3001/processimage',
+      url: `${key.BASE_URL}/processimage`,
       headers: {
         'Content-Type': 'multipart/form-data',
-        token:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVlNzc3MTNlMGZkNmEzNmY2NTZkNjA4NyIsImlhdCI6MTU4NDg4NzEzOH0.hrPWmDySOnIU4Tn4xiUbcWmXUhZQ5PmdaGyizXi028E'
+        token: key.devToken
       },
       data: formData
     })
@@ -90,11 +90,7 @@ export default function App() {
 
   const takePicture = async () => {
     if (camera) {
-<<<<<<< HEAD
-      let photo = await camera.takePictureAsync({ base64: true, quality : 0.5 })
-=======
       let photo = await camera.takePictureAsync({ base64: true, quality: 0.5 })
->>>>>>> add login screen
       console.log(photo.name, photo.type, photo.uri)
       setPictureTaken(photo.uri)
       handlePhoto(photo.uri)
@@ -205,7 +201,7 @@ export default function App() {
         ref={ref => {
           setCamera(ref)
         }}
-        autoFocus={"on"}
+        autoFocus={'on'}
       >
         <View
           style={{

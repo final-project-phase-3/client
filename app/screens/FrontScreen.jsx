@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Dimensions, View, Text, Image } from 'react-native'
-import * as GoogleSignIn from 'expo-google-sign-in'
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  Text,
+  Image,
+  AsyncStorage
+} from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as AppAuth from 'expo-app-auth'
+import { useNavigation } from '@react-navigation/native'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,52 +32,26 @@ const styles = StyleSheet.create({
 })
 
 export default function FrontScreen() {
-  const [user, setUser] = useState(null)
-  const { URLSchemes } = AppAuth
+  let [authState, setAuthState] = useState(null)
+  const { navigate } = useNavigation()
 
   useEffect(() => {
-    initAsync()
+    ;(async () => {
+      let cachedAuth = await getCachedAuthAsync()
+      console.log(cachedAuth)
+      if (cachedAuth && !authState) {
+        setAuthState(cachedAuth)
+      }
+    })()
   }, [])
 
-  initAsync = async () => {
-    await GoogleSignIn.initAsync({
-      // You may ommit the clientId when the firebase `googleServicesFile` is configured
-      clientId:
-        '282178072248-ogfds717vqnbaim9blo3lucr4bdqefur.apps.googleusercontent.com'
-    })
-    this._syncUserWithStateAsync()
-  }
-
-  console.log(AppAuth)
-
-  _syncUserWithStateAsync = async () => {
-    const user = await GoogleSignIn.signInSilentlyAsync()
-    setUser(user)
-  }
-
-  signOutAsync = async () => {
-    await GoogleSignIn.signOutAsync()
-    setUser(null)
-  }
-
-  signInAsync = async () => {
-    try {
-      await GoogleSignIn.askForPlayServicesAsync()
-      const { type, user } = await GoogleSignIn.signInAsync()
-      if (type === 'success') {
-        this._syncUserWithStateAsync()
-      }
-    } catch ({ message }) {
-      alert('login: Error:' + message)
-    }
-  }
+  useEffect(() => {
+    if (authState) navigate('HomeScreen')
+  }, [authState])
 
   onPress = () => {
-    if (user) {
-      this.signOutAsync()
-    } else {
-      this.signInAsync()
-    }
+    //   this.signInAsync()
+    // navigate('HomeScreen')
   }
 
   return (
@@ -83,10 +64,14 @@ export default function FrontScreen() {
             height: 300
           }}
         />
-        <Text>{JSON.stringify(URLSchemes)}</Text>
       </View>
       <View style={styles.bottom}>
-        <TouchableOpacity onPress={() => onPress()}>
+        <TouchableOpacity
+          onPress={async () => {
+            const authState = await signInAsync()
+            setAuthState(authState)
+          }}
+        >
           <Text
             style={{
               backgroundColor: '#efefef',
@@ -100,4 +85,63 @@ export default function FrontScreen() {
       </View>
     </View>
   )
+}
+
+let config = {
+  issuer: 'https://accounts.google.com',
+  scopes: ['openid', 'profile'],
+  /* This is the CLIENT_ID generated from a Firebase project */
+  clientId:
+    '603386649315-vp4revvrcgrcjme51ebuhbkbspl048l9.apps.googleusercontent.com'
+}
+
+let StorageKey = '@MyApp:CustomGoogleOAuthKey'
+
+export async function signInAsync() {
+  let authState = await AppAuth.authAsync(config)
+  await cacheAuthAsync(authState)
+  console.log('signInAsync', authState)
+  return authState
+}
+
+async function cacheAuthAsync(authState) {
+  return await AsyncStorage.setItem(StorageKey, JSON.stringify(authState))
+}
+
+export async function getCachedAuthAsync() {
+  let value = await AsyncStorage.getItem(StorageKey)
+  let authState = JSON.parse(value)
+  //   console.log('getCachedAuthAsync', authState)
+  if (authState) {
+    if (checkIfTokenExpired(authState)) {
+      return refreshAuthAsync(authState)
+    } else {
+      return authState
+    }
+  }
+  return null
+}
+
+function checkIfTokenExpired({ accessTokenExpirationDate }) {
+  return new Date(accessTokenExpirationDate) < new Date()
+}
+
+async function refreshAuthAsync({ refreshToken }) {
+  let authState = await AppAuth.refreshAsync(config, refreshToken)
+  console.log('refreshAuth', authState)
+  await cacheAuthAsync(authState)
+  return authState
+}
+
+export async function signOutAsync({ accessToken }) {
+  try {
+    await AppAuth.revokeAsync(config, {
+      token: accessToken,
+      isClientIdProvided: true
+    })
+    await AsyncStorage.removeItem(StorageKey)
+    return null
+  } catch (e) {
+    alert(`Failed to revoke token: ${e.message}`)
+  }
 }
