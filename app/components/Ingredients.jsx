@@ -4,22 +4,28 @@ import {
   ActivityIndicator,
   StyleSheet,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { Image } from 'react-native-elements'
+import { useMutation } from '@apollo/react-hooks'
 
 import { addChosen, removeChosen } from '../store/actions/ingredientActions'
+import { DELETE_INGREDIENT, GET_USER } from '../graphql'
 
 function Ingredients({ ingredient }) {
   const dispatch = useDispatch()
   const { chosenIngredients } = useSelector(state => {
-    return state
+    return state.ingredientsReducers
   })
   const ingredientIndex = chosenIngredients.findIndex(
     ing => ing._id === ingredient._id
   )
+  const [deleteIngredient, { data }] = useMutation(DELETE_INGREDIENT, {
+    refetchQueries: [{ query: GET_USER }]
+  })
 
   const handleSelect = () => {
     if (ingredientIndex > -1) {
@@ -29,9 +35,36 @@ function Ingredients({ ingredient }) {
     }
   }
 
+  const handleLongPress = () => {
+    return Alert.alert(
+      `Delete ${ingredient.name} from your refrigerator`,
+      `Are you sure?`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel'
+        },
+        {
+          text: 'OK',
+          onPress: async () => {
+            const result = await deleteIngredient({
+              variables: { _id: ingredient._id }
+            })
+            console.log(result)
+            if (ingredientIndex > -1) dispatch(removeChosen(ingredient))
+            if (result) return Alert.alert('Success')
+          }
+        }
+      ]
+    )
+  }
+
   return (
     <View style={styles.imageContainer}>
-      <TouchableOpacity onPress={() => handleSelect()}>
+      <TouchableOpacity
+        onPress={() => handleSelect()}
+        onLongPress={() => handleLongPress()}
+      >
         <Image
           style={[styles.image, ingredientIndex > -1 && { opacity: 0.5 }]}
           source={{

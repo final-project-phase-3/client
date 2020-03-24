@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux'
 function Home() {
   const { navigate } = useNavigation()
   const { chosenIngredients } = useSelector(state => {
-    return state
+    return state.ingredientsReducers
   })
 
   const handleSearch = () => {

@@ -29,7 +29,13 @@ export default function FridgeStackNavigation() {
         component={Home}
       />
       <Stack.Screen name="SearchResult" component={SearchResult} />
-      <Stack.Screen name="FavRecipeDetails" component={RecipeDetails} />
+      <Stack.Screen name="FavRecipeDetails" component={RecipeDetails} options={{
+        headerTitle : "Favourite Recipes",
+        headerTitleStyle: {
+          fontFamily: 'reem-kufi',
+          fontWeight: '200'
+        }
+      }} />
       <Stack.Screen
         name="Camera"
         component={Camera}

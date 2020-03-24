@@ -27,7 +27,6 @@ export default RecipeDetails = props => {
 
     function handleClickNutrition(){
         setShowingNutrition(!showingNutrition)
-        console.log(showingNutrition)
     }
 
     useEffect(()=>{

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "282178072248",
+    "firebase_url": "https://coolkas-app.firebaseio.com",
+    "project_id": "coolkas-app",
+    "storage_bucket": "coolkas-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282178072248:android:1718a85eed706b2214ce4d",
+        "android_client_info": {
+          "package_name": "com.hacktiv8.coolkasapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282178072248-t2mqe9gpaksdhnte6ibb1v4msilss87s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFREBzv326FHccX42BlXIQcvkcEXGSUyM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282178072248-t2mqe9gpaksdhnte6ibb1v4msilss87s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

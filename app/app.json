@@ -24,7 +24,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hacktiv8.coolkasapp",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.282178072248-ogfds717vqnbaim9blo3lucr4bdqefur"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "package": "com.hacktiv8.coolkasapp",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }
