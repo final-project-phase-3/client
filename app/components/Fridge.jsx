@@ -2,7 +2,6 @@ import React from 'react'
 import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { useQuery } from '@apollo/react-hooks'
 import LottieView from 'lottie-react-native'
-
 import Ingredients from './Ingredients'
 import { GET_USER } from '../graphql'
 
@@ -33,13 +32,11 @@ const RecipeDetails = props => {
     )
   } else {
     return (
-      <ScrollView>
         <View style={styles.container}>
           {data.getUser.refrigerator.map(ingredient => (
             <Ingredients key={ingredient._id} ingredient={ingredient} />
-          ))}
+            ))}
         </View>
-      </ScrollView>
     )
   }
 }

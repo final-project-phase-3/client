@@ -1,25 +1,47 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   StyleSheet,
   View,
   Text,
   TouchableOpacity,
   ImageBackground,
-  Dimensions
+  Dimensions,ScrollView
 } from 'react-native'
+import Styles from '../Styles'
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import ActionButton from 'react-native-action-button'
 import { useSelector } from 'react-redux'
-
+import { copilot,CopilotStep,walkthroughable } from "react-native-copilot"
 import Fridge from '../components/Fridge'
 import RecipesCarousel from '../components/RecipesCarousel'
+import { ShadowPropTypesIOS,Alert } from 'react-native'
 
-function Home() {
+const CopilotView = walkthroughable(View);
+const CopilotTouchableOpacity = walkthroughable(TouchableOpacity);
+
+function Home(props) {
   const { navigate } = useNavigation()
   const { chosenIngredients } = useSelector(state => {
     return state.ingredientsReducers
   })
+  useEffect(() => {
+    Alert.alert(
+      `Start Tutorial`,
+      '',
+      [
+        {
+          text: 'Skip',
+        },
+        {
+          text: 'OK',
+          onPress: () => props.start()
+        }
+      ],
+      { cancelable: true }
+    )
+  },[])
+  
 
   const handleSearch = () => {
     if (chosenIngredients.length < 1) {
@@ -30,48 +52,73 @@ function Home() {
   }
 
   return (
+
     <ImageBackground
-      source={require('../assets/home-bg.png')}
-      style={{ width: '100%', height: '100%' }}
+    source={require('../assets/home-bg.png')}
+    style={{ width: '100%', height: '100%' }}
     >
-      <View>
-        <RecipesCarousel />
-      </View>
+    <ScrollView>
+      <CopilotStep
+          text="You can see random recipe here!"
+          order={4}
+          name="carousel"
+          >
+          <CopilotView>
+            <View>
+              <RecipesCarousel />
+            </View>
+          </CopilotView>
+        </CopilotStep>
+      
 
       <View style={styles.mainContainer}>
         <View style={styles.headContainer}>
           <Text style={[styles.textTitle]}>Your Ingredients</Text>
-          <TouchableOpacity
-            style={styles.uploadBtn}
-            onPress={() => navigate('Camera')}
-          >
-            <Ionicons name="ios-camera" size={24} color="#efefef" />
-            <Text style={styles.textBtn}>Upload</Text>
-          </TouchableOpacity>
+          <CopilotStep
+            text="Click here to take picture your ingredient"
+            order={1}
+            name="upload"
+            >
+            <CopilotTouchableOpacity>
+              <TouchableOpacity
+                style={styles.uploadBtn}
+                onPress={() => navigate('Camera')}
+                >
+                <Ionicons name="ios-camera" size={24} color="#efefef" />
+                <Text style={styles.textBtn}>Upload</Text>
+              </TouchableOpacity>
+            </CopilotTouchableOpacity>
+          </CopilotStep>
         </View>
-        <View style={styles.contentContainer}>
-          <Fridge />
-        </View>
+        <CopilotStep
+            text="Your ingredients will be stored here after previous step!"
+            order={2}
+            name="fridge"
+            >
+          <CopilotView>
+            <View style={styles.contentContainer}>
+              <Fridge />
+            </View>
+          </CopilotView>
+        </CopilotStep>
       </View>
-      <ActionButton
-        buttonColor="rgba(231,76,60,1)"
-        style={{
-          shadowColor: '#000',
-          shadowOffset: {
-            width: 0,
-            height: 4
-          },
-          shadowOpacity: 0.32,
-          shadowRadius: 5.46,
-          elevation: 9
-        }}
-        onPress={() => {
-          handleSearch()
-        }}
-        renderIcon={() => (
-          <Ionicons name="ios-search" size={20} color="#efefef" />
-        )}
-      ></ActionButton>
+      </ScrollView>
+      <CopilotStep
+          text="Click here to find recipe by ingredients"
+          order={3}
+          name="search"
+          >  
+        <CopilotView style={Styles.nutritionalValueButton}>
+          <View >
+            <TouchableOpacity onPress={handleSearch}>
+              <Text style={{...Styles.TitleText, color : "white", fontSize : 12}}>
+                <Ionicons name="ios-search" size={20} color="#efefef" />
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </CopilotView>
+      </CopilotStep>
+            
     </ImageBackground>
   )
 }
@@ -119,4 +166,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+export default copilot()(Home)

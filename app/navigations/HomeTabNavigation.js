@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import FridgeStackNavigation from './FridgeStackNavigator'
 import FavouriteStackNavigation from './FavouriteStackNavigation'
 import { MaterialIcons } from '@expo/vector-icons'
-
 const Tab = createBottomTabNavigator()
 
 export default function HomeTabNavigation() {
