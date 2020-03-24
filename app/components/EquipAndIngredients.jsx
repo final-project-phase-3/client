@@ -49,7 +49,7 @@ function EquipAndIngredients(props){
                 <View style={{flexDirection : "row"}}>
                         <View style={{flex : 2}}>
                             {
-                                equipments.map( equipment => {
+                                equipments.map( (equipment) => {
                                     return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {equipment} </Text>
                                 })
                             }

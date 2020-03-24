@@ -32,7 +32,7 @@ function EquipAndIngredients(props){
             >
                 {
                     steps.map( (step, i) => {
-                        return <StepsCard step={step} index={i}/>
+                        return <StepsCard key={i} step={step} index={i}/>
                     })
                 }
             </ScrollView>

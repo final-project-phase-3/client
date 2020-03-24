@@ -47,7 +47,7 @@ export default RecipeDetails = props => {
                 <Text style={Styles.TitleText}>❤️ Your favourites!</Text>
               </View>
               {data.getFav.map(recipe => {
-                return <RecipeCard recipe={recipe} />
+                return <RecipeCard key={recipe.id} recipe={recipe} />
               })}
             </View>
           </ScrollView>
