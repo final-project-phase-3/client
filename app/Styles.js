@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 
 export default StyleSheet.create({
   RecipeCard: {
@@ -6,7 +6,7 @@ export default StyleSheet.create({
     marginHorizontal: 10,
     marginVertical: 10,
     borderRadius: 28,
-    height: 200,
+    height: 180,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -28,7 +28,7 @@ export default StyleSheet.create({
   RecipeCardText: {
     color: '#EFEFEF',
     fontFamily: 'reem-kufi',
-    fontSize: 30,
+    fontSize: 26,
     textAlign: 'center',
     textShadowColor: 'rgba(0, 0, 0, 1)',
     textShadowOffset: { width: 1, height: 2 },

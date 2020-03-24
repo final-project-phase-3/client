@@ -121,3 +121,31 @@ export const DELETE_INGREDIENT = gql`
     }
   }
 `
+
+export const GET_RANDOM_RECIPES = gql`
+  query {
+    getRandomRecipes {
+      id
+      title
+      image
+      ingredients {
+        original
+      }
+      nutritions {
+        title
+        amount
+        unit
+      }
+      readyInMinutes
+      cookingSteps {
+        step
+        equipment {
+          name
+        }
+        ingredients {
+          name
+        }
+      }
+    }
+  }
+`
