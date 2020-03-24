@@ -10,9 +10,10 @@ import {
 import { useNavigation } from '@react-navigation/native'
 import { Ionicons } from '@expo/vector-icons'
 import ActionButton from 'react-native-action-button'
+import { useSelector } from 'react-redux'
 
 import Fridge from '../components/Fridge'
-import { useSelector } from 'react-redux'
+import RecipesCarousel from '../components/RecipesCarousel'
 
 function Home() {
   const { navigate } = useNavigation()
@@ -33,6 +34,10 @@ function Home() {
       source={require('../assets/home-bg.png')}
       style={{ width: '100%', height: '100%' }}
     >
+      <View>
+        <RecipesCarousel />
+      </View>
+
       <View style={styles.mainContainer}>
         <View style={styles.headContainer}>
           <Text style={[styles.textTitle]}>Your Ingredients</Text>
@@ -85,7 +90,8 @@ const styles = StyleSheet.create({
     flex: 1.75,
     width: '100%',
     padding: 10,
-    height: Dimensions.get('window').height
+    height: Dimensions.get('window').height,
+    marginTop: 30
   },
   textTitle: {
     fontSize: 18,

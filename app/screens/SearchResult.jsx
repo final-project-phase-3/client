@@ -20,10 +20,9 @@ export default SearchResult = props => {
     return state.ingredientsReducers
   })
 
-<<<<<<< HEAD
   const { data, error, loading } = useQuery(GET_RECIPES_NAME, {
-    variables : {
-      ingredients : chosenIngredients.map( el => el.name )
+    variables: {
+      ingredients: chosenIngredients.map(el => el.name)
     }
   })
 
@@ -33,135 +32,7 @@ export default SearchResult = props => {
   // }
 
   const [favourites, setFavourites] = useState(recipesMockup())
-  if(!loading) return (
-    <ImageBackground
-      source={require('../assets/SearchBackground.png')}
-      style={{ width: '100%', height: '100%' }}
-    >
-      <View style={{ marginBottom: 5 }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 10,
-            fontSize: 24,
-            fontFamily: 'reem-kufi',
-            color: '#666565'
-          }}
-        >
-          Amazing recipes found
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          {chosenIngredients.map(ingredient => (
-            <TagIngredient
-              key={ingredient._id}
-              ingredientName={ingredient.name}
-            />
-          ))}
-        </View>
-      </View>
-      <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-          <View style={{ flex: 1 }}>
-            {data.getRecipes.map(recipe => {
-              return <RecipeCard recipe={recipe} />
-            })}
-          </View>
-        </ScrollView>
-      </View>
-    </ImageBackground>
-  )
-  else if(error){
-    console.log(error, 'ini errrrrrrrrrrrrrr')
-    return (
-      <ImageBackground
-      source={require('../assets/SearchBackground.png')}
-      style={{ width: '100%', height: '100%' }}
-      >
-        <View style={{ marginBottom: 5 }}>
-          <Text
-            style={{
-              textAlign: 'center',
-              marginTop: 10,
-              fontSize: 24,
-              fontFamily: 'reem-kufi',
-              color: '#666565'
-            }}
-          >
-            Amazing recipes found
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center'
-            }}
-          >
-            <LottieView
-              source={require('../assets/animations/errorAnimation.json')}
-              autoPlay
-              loop
-            />
-            <Text style={{ marginTop: 400, textAlign: 'center' }}>
-              Oh no, something went wrong ...
-            </Text>
-          </View>
-        </View>
-      </ImageBackground>
-    )
-  } else return (
-    <ImageBackground
-      source={require('../assets/SearchBackground.png')}
-      style={{ width: '100%', height: '100%' }}
-    >
-      <View style={{ marginBottom: 5 }}>
-        <Text
-          style={{
-            textAlign: 'center',
-            marginTop: 10,
-            fontSize: 24,
-            fontFamily: 'reem-kufi',
-            color: '#666565'
-          }}
-        >
-          Amazing recipes found
-        </Text>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'center'
-          }}
-        >
-          <LottieView
-            source={require('../assets/animations/loadingAnimation.json')}
-            autoPlay
-            loop
-          />
-          <Text style={{ marginTop: 400, textAlign: 'center' }}>
-            Finding your recipes ...
-          </Text>
-        </View>
-      </View>
-    </ImageBackground>
-  )
-=======
-  console.log(chosenIngredients.map(el => el.name))
-
-  const [favourites, setFavourites] = useState(recipesMockup())
-  if (loading && !data) {
-    return (
-      <View>
-        <Text>Loading kakak</Text>
-      </View>
-    )
-  } else if (error) {
-    ;<View>
-      <Text>Yhaaa, error</Text>
-    </View>
-  } else {
+  if (!loading)
     return (
       <ImageBackground
         source={require('../assets/SearchBackground.png')}
@@ -196,7 +67,7 @@ export default SearchResult = props => {
         <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={{ flex: 1 }}>
-              {favourites.map(recipe => {
+              {data.getRecipes.map(recipe => {
                 return <RecipeCard recipe={recipe} />
               })}
             </View>
@@ -204,8 +75,79 @@ export default SearchResult = props => {
         </View>
       </ImageBackground>
     )
-  }
->>>>>>> add login screen
+  else if (error) {
+    console.log(error, 'ini errrrrrrrrrrrrrr')
+    return (
+      <ImageBackground
+        source={require('../assets/SearchBackground.png')}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <View style={{ marginBottom: 5 }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 10,
+              fontSize: 24,
+              fontFamily: 'reem-kufi',
+              color: '#666565'
+            }}
+          >
+            Amazing recipes found
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
+            <LottieView
+              source={require('../assets/animations/errorAnimation.json')}
+              autoPlay
+              loop
+            />
+            <Text style={{ marginTop: 400, textAlign: 'center' }}>
+              Oh no, something went wrong ...
+            </Text>
+          </View>
+        </View>
+      </ImageBackground>
+    )
+  } else
+    return (
+      <ImageBackground
+        source={require('../assets/SearchBackground.png')}
+        style={{ width: '100%', height: '100%' }}
+      >
+        <View style={{ marginBottom: 5 }}>
+          <Text
+            style={{
+              textAlign: 'center',
+              marginTop: 10,
+              fontSize: 24,
+              fontFamily: 'reem-kufi',
+              color: '#666565'
+            }}
+          >
+            Amazing recipes found
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center'
+            }}
+          >
+            <LottieView
+              source={require('../assets/animations/loadingAnimation.json')}
+              autoPlay
+              loop
+            />
+            <Text style={{ marginTop: 400, textAlign: 'center' }}>
+              Finding your recipes ...
+            </Text>
+          </View>
+        </View>
+      </ImageBackground>
+    )
 }
 
 const styles = StyleSheet.create({
