@@ -4,8 +4,7 @@ import {
   Text,
   ImageBackground,
   ScrollView,
-  StyleSheet,
-  Dimensions
+  StyleSheet
 } from 'react-native'
 import { useSelector } from 'react-redux'
 import { useQuery } from '@apollo/react-hooks'
@@ -14,16 +13,16 @@ import LottieView from 'lottie-react-native'
 import RecipeCard from '../components/RecipeCard'
 import TagIngredient from '../components/TagIngredient'
 import recipesMockup from '../recipesMockup'
-import { GET_RECIPES_NAME } from '../graphql/index'
+import { SEARCH_RECIPE } from '../graphql/index'
 
 export default SearchResult = props => {
   const { chosenIngredients } = useSelector(state => {
     return state.ingredientsReducers
   })
   const [error,setError] = useState(false)
-  const { data,loading } = useQuery(GET_RECIPES_NAME, {
+  const { data,loading } = useQuery(SEARCH_RECIPE, {
     variables: {
-      ingredients: chosenIngredients.map(el => el.name)
+      input: props.route.params.searchQuery
     },
     onError: () => {
       setError(true)
@@ -39,7 +38,7 @@ export default SearchResult = props => {
   if (data&&!loading)
     return (
       <ImageBackground
-        source={require('../assets/home-bg.png')}
+        source={require('../assets/SearchBackground.png')}
         style={{ width: '100%', height: '100%' }}
       >
         <View style={{ marginBottom: 5 }}>
@@ -71,8 +70,8 @@ export default SearchResult = props => {
         <View style={{ flex: 1 }}>
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={{ flex: 1 }}>
-              {data.getRecipes.map(recipe => {
-                return <RecipeCard key={recipe._id} recipe={recipe} />
+              {data.searchRecipes.map((recipe) => {
+                return <RecipeCard key={recipe.id} recipe={recipe} />
               })}
             </View>
           </ScrollView>
@@ -83,7 +82,7 @@ export default SearchResult = props => {
     console.log(error, 'ini errrrrrrrrrrrrrr')
     return (
       <ImageBackground
-        source={require('../assets/home-bg.png')}
+        source={require('../assets/SearchBackground.png')}
         style={{ width: '100%', height: '100%' }}
       >
         <View style={{ marginBottom: 5 }}>
@@ -98,14 +97,6 @@ export default SearchResult = props => {
           >
             Amazing recipes found
           </Text>
-          <Text style={{ marginTop: Dimensions.get('window').height/5, 
-            textAlign: 'center', 
-            marginBottom : 10, 
-            fontFamily : 'reem-kufi',
-            fontSize : 21,
-            color : '#666565' }}>
-            Oh no, something went wrong ...
-          </Text>
           <View
             style={{
               flexDirection: 'row',
@@ -116,9 +107,10 @@ export default SearchResult = props => {
               source={require('../assets/animations/errorAnimation.json')}
               autoPlay
               loop
-              style={{height : '100%', width : '100%'}}
-              resizeMode="cover"
             />
+            <Text style={{ marginTop: 400, textAlign: 'center' }}>
+              Oh no, something went wrong ...
+            </Text>
           </View>
         </View>
       </ImageBackground>
@@ -126,7 +118,7 @@ export default SearchResult = props => {
   } else
     return (
       <ImageBackground
-        source={require('../assets/home-bg.png')}
+        source={require('../assets/SearchBackground.png')}
         style={{ width: '100%', height: '100%' }}
       >
         <View style={{ marginBottom: 5 }}>

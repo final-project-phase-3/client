@@ -24,11 +24,11 @@ function EquipAndIngredients(props){
             const uniqueEquip = new Set(equipTemp)
             setEquipments([...uniqueEquip])
         })
-        recipe.usedIngredients.forEach( ingredient => {
+        recipe.usedIngredients&&recipe.usedIngredients.forEach( ingredient => {
             ingredTemp.push(ingredient.original)
             setIngredients(ingredTemp)
         })
-        recipe.missedIngredients.forEach( ingredient => {
+        recipe.missedIngredients&&recipe.missedIngredients.forEach( ingredient => {
             missingIngredsTemp.push(ingredient.original)
             setMissingIngreds(missingIngredsTemp)
         })

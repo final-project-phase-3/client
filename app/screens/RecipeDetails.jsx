@@ -22,8 +22,8 @@ export default RecipeDetailScreen = ({route, navigation}) => {
       idAPI : String(recipe.id),
       title : recipe.title,
       image : recipe.image,
-      usedIngredients : recipe.usedIngredients,
-      missedIngredients : recipe.missedIngredients,
+      usedIngredients : recipe.usedIngredients || [],
+      missedIngredients : recipe.missedIngredients || [],
       nutritions : recipe.nutritions,
       cookingSteps : recipe.cookingSteps,
       readyInMinutes : recipe.readyInMinutes

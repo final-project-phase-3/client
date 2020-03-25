@@ -37,7 +37,7 @@ export default RecipeDetails = props => {
   else
     return (
       <ImageBackground
-        source={require('../assets/SearchBackground.png')}
+        source={require('../assets/home-bg.png')}
         style={{ width: '100%', height: '100%' }}
       >
         <View style={{ flex: 1 }}>

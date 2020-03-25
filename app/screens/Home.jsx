@@ -18,6 +18,8 @@ import RecipesCarousel from '../components/RecipesCarousel'
 import { ShadowPropTypesIOS,Alert } from 'react-native'
 import { TextInput } from 'react-native-gesture-handler'
 import { SearchBar } from 'react-native-elements'
+import { useLazyQuery } from '@apollo/react-hooks'
+import { SEARCH_RECIPE } from '../graphql'
 
 const CopilotView = walkthroughable(View);
 const CopilotTouchableOpacity = walkthroughable(TouchableOpacity);
@@ -29,22 +31,23 @@ function Home(props) {
   const { chosenIngredients } = useSelector(state => {
     return state.ingredientsReducers
   })
-  // useEffect(() => {
-  //   Alert.alert(
-  //     `Start Tutorial`,
-  //     '',
-  //     [
-  //       {
-  //         text: 'Skip',
-  //       },
-  //       {
-  //         text: 'OK',
-  //         onPress: () => props.start()
-  //       }
-  //     ],
-  //     { cancelable: true }
-  //   )
-  // },[])
+
+  useEffect(() => {
+    Alert.alert(
+      `Start Tutorial`,
+      '',
+      [
+        {
+          text: 'Skip',
+        },
+        {
+          text: 'OK',
+          onPress: () => props.start()
+        }
+      ],
+      { cancelable: true }
+    )
+  },[])
   
 
   const handleSearch = () => {
@@ -56,26 +59,24 @@ function Home(props) {
   }
 
   const handleSearchBar = (searchQuery) => {
-    console.log(searchQuery)
-    props.navigation.navigate('Camera')
+    props.navigation.navigate('SearchBarResult', { searchQuery })
   }
-
+  
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       header: () => (
         <View style={{width : '100%', flexDirection : 'row', backgroundColor : '#1db954', paddingTop : StatusBar.currentHeight}}>
           <View style={{flex : 2, justifyContent : 'center'}}>
-            <Text style={{fontSize : 21, fontFamily : 'reem-kufi', color : "#EFEFEF", paddingLeft: 10}}>Coolkas</Text>
+            <Text style={{fontSize : 24, fontFamily : 'reem-kufi', color : "#EFEFEF", paddingLeft: 20}}>Coolkas</Text>
           </View>
           <View style={{flex : 4, paddingRight : 5, paddingHorizontal : '10%', justifyContent : 'center'}}>
-            <View style={{height : 50, maxHeight : '80%', flexDirection : "row", borderRadius : 20, backgroundColor : '#EFEFEF'}}>
+            <View style={{height : 55, maxHeight : '80%', flexDirection : "row", borderRadius : 20, backgroundColor : '#EFEFEF'}}>
               <View style={{justifyContent : 'center', alignItems:'center', flex : 1, paddingLeft:10}}>
                 <MaterialIcons name="search" size={20} color="#1DB954" />
               </View>
               <TextInput style={{...Styles.searchTextInput, flex : 11}} 
                 placeholder="Find a recipe.."
                 onSubmitEditing={(event)=> handleSearchBar(event.nativeEvent.text)}
-                value=""
                 />
             </View>
           </View>
@@ -87,7 +88,7 @@ function Home(props) {
   return (
 
     <ImageBackground
-    source={require('../assets/home-bg.png')}
+    source={require('../assets/home_bg2.png')}
     style={{ width: '100%', height: '100%' }}
     >
     <ScrollView>
