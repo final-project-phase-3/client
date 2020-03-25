@@ -5,11 +5,16 @@ import {
   View,
   Text,
   Image,
-  AsyncStorage
+  AsyncStorage,
+  KeyboardAvoidingView,
+  StatusBar
 } from 'react-native'
+import { Input } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import * as AppAuth from 'expo-app-auth'
 import { useNavigation } from '@react-navigation/native'
+import {useMutation} from '@apollo/react-hooks'
+import {REGISTER,LOGIN} from '../graphql'
 
 const styles = StyleSheet.create({
   container: {
@@ -17,72 +22,174 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     backgroundColor: '#31B455',
     flex: 2,
-    justifyContent: 'center'
+    fontFamily:'reem-kufi'
   },
   top: {
     alignItems: 'center',
     flex: 1,
-    marginTop: 150
+    paddingTop:StatusBar.currentHeight*2
   },
   bottom: {
-    marginTop: 40,
     alignItems: 'center',
-    flex: 1
+    flex: 2
   }
 })
 
 export default function FrontScreen() {
-  let [authState, setAuthState] = useState(null)
+  const [FormLogin, setFormLogin] = useState(true)
+  const [register] = useMutation(REGISTER)
+  const [login] = useMutation(LOGIN)
   const { navigate } = useNavigation()
+  const [username,setUsername] = useState('')
+  const [password,setPassword] = useState('')
+  const [email,setEmail] = useState('')
 
-  useEffect(() => {
-    ;(async () => {
-      let cachedAuth = await getCachedAuthAsync()
-      console.log(cachedAuth)
-      if (cachedAuth && !authState) {
-        setAuthState(cachedAuth)
+  const handleChange = (type,value) => {
+    switch (type) {
+      case 'username':
+        setUsername(value)
+        break;
+      case 'password':
+        setPassword(value)
+        break;
+      case 'email':
+        setEmail(value)
+        break;
+      default:
+        break;
+    }
+  }
+  useEffect(async() => {
+    try {
+      const value = await AsyncStorage.getItem('token')
+      if(value){
+        navigate('HomeScreen')
       }
-    })()
-  }, [])
+    } catch (error) {
+      
+    }
+  },[])
+  const handleRegister = async () => {
+    try {
+      const response = await register({variables:{username,email,password}})
+      console.log(response)
+      await AsyncStorage.setItem('token', response.data.register.token);
+      navigate('HomeScreen')
+    } catch (error) {
+      alert(error.graphQLErrors.map(({ message }, i) => {
+        return message
+      }))
+    }
+  }
 
-  useEffect(() => {
-    if (authState) navigate('HomeScreen')
-  }, [authState])
+  const handleLogin = async () => {
+    try {
+      const response = await login({variables:{input:email,password}})
+      console.log(response)
+      await AsyncStorage.setItem('token', response.data.login.token);
+      navigate('HomeScreen')
+    } catch (error) {
+      alert(error.graphQLErrors.map(({ message }, i) => {
+        return message
+      }))
+    }
+  }
 
-  onPress = () => {
-    //   this.signInAsync()
-    // navigate('HomeScreen')
+  const changeForm = () => {
+    setFormLogin(state => !state)
   }
 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
         <Image
+          resizeMode="contain"
           source={require('../assets/coolkas2.png')}
           style={{
             width: 200,
-            height: 300
+            height: 400,
+            flex:1
           }}
         />
       </View>
-      <View style={styles.bottom}>
+      <KeyboardAvoidingView style={styles.bottom} behavior="padding" enabled >
+        {
+          !FormLogin &&
+          <Input
+          placeholder='username'
+          label="Username"
+          placeholderTextColor="white"
+          labelStyle={{color:"white"}}
+          value={username}
+          onChangeText={(text) => handleChange('username',text)}
+          containerStyle={{paddingHorizontal:50}}
+          inputContainerStyle={{borderBottomColor:"white"}}
+          inputStyle={{color:"white",paddingHorizontal:10}}
+          leftIcon={{ type: 'font-awesome', name: 'user' ,color:'white',size:15 }}
+          />
+        }
+
+        <Input
+          placeholder='mail@mail.com'
+          label="Email"
+          placeholderTextColor="white"
+          labelStyle={{color:"white"}}
+          containerStyle={{paddingHorizontal:50}}
+          inputContainerStyle={{borderBottomColor:"white"}}
+          inputStyle={{color:"white",paddingHorizontal:10}}
+          leftIcon={{ type: 'font-awesome', name: 'envelope' ,color:'white',size:15 }}
+          value={email}
+          onChangeText={(text) => handleChange('email',text)}
+        />
+
+        <Input
+          placeholder='password'
+          label="Password"
+          secureTextEntry={true}
+          placeholderTextColor="white"
+          labelStyle={{color:"white"}}
+          containerStyle={{paddingHorizontal:50,paddingVertical:10}}
+          inputContainerStyle={{borderBottomColor:"white"}}
+          inputStyle={{color:"white",paddingHorizontal:10}}
+          leftIcon={{ type: 'font-awesome', name: 'lock',color:"white" }}
+          value={password}
+          onChangeText={(text) => handleChange('password',text)}
+        />
         <TouchableOpacity
           onPress={async () => {
-            const authState = await signInAsync()
-            setAuthState(authState)
+            FormLogin  ? handleLogin() : handleRegister()
           }}
         >
           <Text
             style={{
               backgroundColor: '#efefef',
               padding: 10,
-              borderRadius: 8
+              borderRadius: 8,
+              marginTop:10
             }}
           >
-            Login with Google
+            {FormLogin  ? "Sign In" : "Sign Up"}
           </Text>
         </TouchableOpacity>
-      </View>
+        <View style={{alignSelf:"flex-end",paddingHorizontal:30}}>
+          <TouchableOpacity
+            onPress={() => {
+                changeForm()
+              }}
+              >
+            <Text
+              style={{
+                borderBottomWidth:1,
+                color:"white", 
+                width:"100%",
+                borderBottomColor:"white"
+              }}
+              >
+              {FormLogin  ? "Sign Up" : "Sign In"}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </KeyboardAvoidingView>
     </View>
   )
 }

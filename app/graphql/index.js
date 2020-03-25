@@ -149,3 +149,18 @@ export const GET_RANDOM_RECIPES = gql`
     }
   }
 `
+export const REGISTER = gql`
+  mutation register($username: String!,$email: String!,$password: String!) {
+    register(username:$username,email:$email,password:$password) {
+      token
+    }
+  }
+`
+
+export const LOGIN = gql`
+  mutation login($input: String!,$password: String!) {
+    login(input:$input,password:$password) {
+      token
+    }
+  }
+`
