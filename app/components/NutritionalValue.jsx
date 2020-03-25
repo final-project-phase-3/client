@@ -35,16 +35,16 @@ function NutritionalValue(props){
                 <View style={{flexDirection : "row"}}>
                         <View style={{flex : 2}}>
                             {
-                                nutritions.map( nutrition => {
-                                    return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\u2022'} {nutrition} </Text>
+                                nutritions.map( (nutrition, i) => {
+                                    return <Text key={i} style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\u2022'} {nutrition} </Text>
                                 })
                             }
                             <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'}  </Text>
                         </View>
                         <View style={{flex : 1}}>
                             {
-                                nutritionsAmount.map( nutrition => {
-                                    return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}> {nutrition.amount} {nutrition.unit} </Text>
+                                nutritionsAmount.map( (nutrition, i) => {
+                                    return <Text key={i} style={{fontSize : 20, fontFamily : 'reem-kufi'}}> {nutrition.amount} {nutrition.unit} </Text>
                                 })
                             }
                         </View>

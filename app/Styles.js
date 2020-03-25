@@ -83,5 +83,13 @@ export default StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 10,
     elevation: 7
+  },
+  searchTextInput : {
+    paddingRight : '5%', 
+    borderRadius : 20, 
+    backgroundColor : '#EFEFEF',
+    fontFamily:'reem-kufi', 
+    paddingHorizontal: 15, 
+    justifyContent : 'center'
   }
 })

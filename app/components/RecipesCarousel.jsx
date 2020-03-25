@@ -95,14 +95,15 @@ export default function RecipesCarousel() {
           Recipes Recommendation
         </Text>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {data.getRandomRecipes.map(recipe => (
+          {data.getRandomRecipes.map((recipe, i) => (
             <View
+              key={i}
               style={{
                 width: Dimensions.get('window').width - 70,
                 height: 200
               }}
             >
-              <RecipeCard key={recipe.id} recipe={recipe} />
+              <RecipeCard key={recipe._id} recipe={recipe} />
             </View>
           ))}
         </ScrollView>

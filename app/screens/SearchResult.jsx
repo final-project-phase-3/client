@@ -71,7 +71,7 @@ export default SearchResult = props => {
           <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <View style={{ flex: 1 }}>
               {data.getRecipes.map(recipe => {
-                return <RecipeCard key={recipe.id} recipe={recipe} />
+                return <RecipeCard key={recipe._id} recipe={recipe} />
               })}
             </View>
           </ScrollView>

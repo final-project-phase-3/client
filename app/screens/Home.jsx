@@ -5,42 +5,46 @@ import {
   Text,
   TouchableOpacity,
   ImageBackground,
-  Dimensions,ScrollView
+  Dimensions,ScrollView, StatusBar
 } from 'react-native'
 import Styles from '../Styles'
 import { useNavigation } from '@react-navigation/native'
-import { Ionicons } from '@expo/vector-icons'
+import { Ionicons, MaterialIcons } from '@expo/vector-icons'
 import ActionButton from 'react-native-action-button'
 import { useSelector } from 'react-redux'
 import { copilot,CopilotStep,walkthroughable } from "react-native-copilot"
 import Fridge from '../components/Fridge'
 import RecipesCarousel from '../components/RecipesCarousel'
 import { ShadowPropTypesIOS,Alert } from 'react-native'
+import { TextInput } from 'react-native-gesture-handler'
+import { SearchBar } from 'react-native-elements'
 
 const CopilotView = walkthroughable(View);
 const CopilotTouchableOpacity = walkthroughable(TouchableOpacity);
 
 function Home(props) {
+  const [searchText, setSearchText] = useState('test') 
   const { navigate } = useNavigation()
+
   const { chosenIngredients } = useSelector(state => {
     return state.ingredientsReducers
   })
-  useEffect(() => {
-    Alert.alert(
-      `Start Tutorial`,
-      '',
-      [
-        {
-          text: 'Skip',
-        },
-        {
-          text: 'OK',
-          onPress: () => props.start()
-        }
-      ],
-      { cancelable: true }
-    )
-  },[])
+  // useEffect(() => {
+  //   Alert.alert(
+  //     `Start Tutorial`,
+  //     '',
+  //     [
+  //       {
+  //         text: 'Skip',
+  //       },
+  //       {
+  //         text: 'OK',
+  //         onPress: () => props.start()
+  //       }
+  //     ],
+  //     { cancelable: true }
+  //   )
+  // },[])
   
 
   const handleSearch = () => {
@@ -50,6 +54,38 @@ function Home(props) {
       navigate('SearchResult')
     }
   }
+
+  const handleSearchBar = (searchQuery) => {
+    console.log(searchQuery)
+  }
+
+  React.useLayoutEffect(() => {
+    props.navigation.setOptions({
+      header: () => (
+        <View style={{width : '100%', flexDirection : 'row', backgroundColor : '#1db954', paddingTop : StatusBar.currentHeight}}>
+          <View style={{flex : 2, justifyContent : 'center'}}>
+            <Text style={{fontSize : 21, fontFamily : 'reem-kufi', color : "#EFEFEF", paddingLeft: 10}}>Coolkas</Text>
+          </View>
+          <View style={{flex : 4, paddingRight : 5, paddingHorizontal : '10%', justifyContent : 'center'}}>
+            <View style={{height : 50, maxHeight : '80%', flexDirection : "row", borderRadius : 20, backgroundColor : '#EFEFEF'}}>
+              <View style={{justifyContent : 'center', alignItems:'center', flex : 1, paddingLeft:10}}>
+                <MaterialIcons name="search" size={20} color="#1DB954" />
+              </View>
+              <TextInput style={{...Styles.searchTextInput, flex : 11}} 
+                placeholder="Find a recipe.."
+                onSubmitEditing={(event)=> handleSearchBar(event.nativeEvent.text)}
+                onChangeText={(text)=> {
+                  console.log(text)
+                  setSearchText(text)
+                }}
+                value={searchText}
+                />
+            </View>
+          </View>
+        </View>
+      )
+    })
+  }, [props.navigation])
 
   return (
 
