@@ -49,41 +49,40 @@ export default RecipeDetailScreen = props => {
       { cancelable: true }
     )
   }
-  console.log(params.recipe)
-  function handleShare(){
-    console.log(params.recipe)
+
+  function handleShare() {
     const msg = params.recipe
     const text = encodeURI(
       'Hey, I scanned my fridge with AI and got this recipe!\n\n' +
       `*${msg.title}*\n\n` +
       `Cooking Time :\n${msg.readyInMinutes} minutes\n\n` +
       `Ingredients used : \n${msg.usedIngredients.map(el => {
-        return `- ${el.original}`
-      }).concat(msg.missedIngredients.map(el1 => {
-        return `- ${el1.original}`
-      })).join('\n')}\n\n`+
-      `Cooking Steps :\n${msg.cookingSteps.map((el,i) => {
-        return `${i + 1}. ${el.step}`
+          return `- ${el.original}`
+        }).concat(msg.missedIngredients.map(el1 => {
+          return `- ${el1.original}`
+        })).join('\n')}\n\n`+
+        `Cooking Steps :\n${msg.cookingSteps.map((el,i) => {
+          return `${i + 1}. ${el.step}`
       }).join(`\n\n`)}`
     )
     
-    Linking.openURL(`whatsapp://send?text=${text}&phone=6281223131600`)
+    Linking.openURL(`whatsapp://send?text=${text}`)
   }
 
   React.useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <View style={{ marginHorizontal: 10 }}>
+        <View style={{ marginHorizontal: 10, flexDirection : 'row', marginHorizontal : 10 }}>
           <TouchableNativeFeedback onPress={() => handleShare()}>
             <MaterialIcons
               name="share"
-              style={{ fontSize: 30, color: 'white' }}
+              style={{ fontSize: 30, color: 'white', marginHorizontal : 10 }}
             />
           </TouchableNativeFeedback>
           <TouchableNativeFeedback onPress={() => handleDeleteFav()}>
             <MaterialIcons
               name="delete"
-              style={{ fontSize: 30, color: 'white' }}
+              style={{ fontSize: 30, color: 'white', marginHorizontal : 10 }}
             />
           </TouchableNativeFeedback>
         </View>

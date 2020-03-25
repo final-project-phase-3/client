@@ -9,6 +9,7 @@ import store from './store'
 import client from './config/graphql'
 
 export default function App() {
+  console.disableYellowBox = true
   const [fontReady,setFontReady] = useState(false)
   useEffect(() => {
     const loadFonts = async () => {

@@ -37,7 +37,7 @@ export default RecipeDetails = props => {
   else
     return (
       <ImageBackground
-        source={require('../assets/SearchBackground.png')}
+        source={require('../assets/home-bg.png')}
         style={{ width: '100%', height: '100%' }}
       >
         <View style={{ flex: 1 }}>
@@ -47,7 +47,7 @@ export default RecipeDetails = props => {
                 <Text style={Styles.TitleText}>❤️ Your favourites!</Text>
               </View>
               {data.getFav.map(recipe => {
-                return <RecipeCard recipe={recipe} />
+                return <RecipeCard key={recipe._id} recipe={recipe} />
               })}
             </View>
           </ScrollView>

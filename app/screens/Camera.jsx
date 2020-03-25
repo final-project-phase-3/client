@@ -57,14 +57,14 @@ export default function App() {
     refetchQueries: [{ query: GET_USER }]
   })
 
-  const handleAxios = formData => {
+  const handleAxios = async formData => {
     setLoading(true)
     axios({
       method: 'post',
       url: `${key.BASE_URL}:3001/processimage`,
       headers: {
         'Content-Type': 'multipart/form-data',
-        token: key.devToken
+        token: await key.devToken()
       },
       data: formData
     })

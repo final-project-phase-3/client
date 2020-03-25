@@ -59,16 +59,15 @@ export default function FrontScreen() {
         break;
     }
   }
-  useEffect(async() => {
-    try {
-      const value = await AsyncStorage.getItem('token')
-      if(value){
-        navigate('HomeScreen')
-      }
-    } catch (error) {
-      
+  useEffect(() => {
+    async function checkLogin(){
+        const value = await AsyncStorage.getItem('token')
+        if(value) navigate('HomeScreen')
     }
+    checkLogin()
   },[])
+
+
   const handleRegister = async () => {
     try {
       const response = await register({variables:{username,email,password}})

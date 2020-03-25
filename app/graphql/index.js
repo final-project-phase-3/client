@@ -164,3 +164,31 @@ export const LOGIN = gql`
     }
   }
 `
+
+export const SEARCH_RECIPE = gql`
+  query searchRecipes($input: String!){
+    searchRecipes(input:$input) {
+      id
+      title
+      image
+      ingredients {
+        original
+      }
+      nutritions {
+        title
+        amount
+        unit
+      }
+      readyInMinutes
+      cookingSteps {
+        step
+        equipment {
+          name
+        }
+        ingredients {
+          name
+        }
+      }
+    }
+  }
+`

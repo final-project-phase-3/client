@@ -5,6 +5,7 @@ import Camera from '../screens/Camera'
 import Home from '../screens/Home'
 import SearchResult from '../screens/SearchResult'
 import RecipeDetails from '../screens/RecipeDetails'
+import SearchBarResult from '../screens/SearchBarResult'
 
 const Stack = createStackNavigator()
 
@@ -28,7 +29,20 @@ export default function FridgeStackNavigation() {
         }}
         component={Home}
       />
-      <Stack.Screen name="SearchResult" component={SearchResult} />
+      <Stack.Screen name="SearchResult" component={SearchResult} options={{
+        headerTitle : 'Search Results',
+        headerTitleStyle: {
+          fontFamily: 'reem-kufi',
+          fontWeight: '200'
+        }
+      }} />
+      <Stack.Screen name="SearchBarResult" component={SearchBarResult} options={{
+        headerTitle : 'Search Results',
+        headerTitleStyle: {
+          fontFamily: 'reem-kufi',
+          fontWeight: '200'
+        }
+      }}/>
       <Stack.Screen name="FavRecipeDetails" component={RecipeDetails} options={{
         headerTitle : "Favourite Recipes",
         headerTitleStyle: {

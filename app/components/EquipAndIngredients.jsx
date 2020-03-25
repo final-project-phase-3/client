@@ -24,11 +24,11 @@ function EquipAndIngredients(props){
             const uniqueEquip = new Set(equipTemp)
             setEquipments([...uniqueEquip])
         })
-        recipe.usedIngredients.forEach( ingredient => {
+        recipe.usedIngredients&&recipe.usedIngredients.forEach( ingredient => {
             ingredTemp.push(ingredient.original)
             setIngredients(ingredTemp)
         })
-        recipe.missedIngredients.forEach( ingredient => {
+        recipe.missedIngredients&&recipe.missedIngredients.forEach( ingredient => {
             missingIngredsTemp.push(ingredient.original)
             setMissingIngreds(missingIngredsTemp)
         })
@@ -49,8 +49,8 @@ function EquipAndIngredients(props){
                 <View style={{flexDirection : "row"}}>
                         <View style={{flex : 2}}>
                             {
-                                equipments.map( equipment => {
-                                    return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {equipment} </Text>
+                                equipments.map( (equipment, i) => {
+                                    return <Text key={i} style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {equipment} </Text>
                                 })
                             }
                             <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'}  </Text>
@@ -64,18 +64,11 @@ function EquipAndIngredients(props){
             <View style={{flexDirection : "row"}}>
                 <View style={{flex : 2}}>
                     {
-                        ingredients.map( ingredient => {
-                            return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {ingredient} </Text>
+                        ingredients.map( (ingredient, i) => {
+                            return <Text key={i} style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {ingredient} </Text>
                         })
                     }
                     <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'}  </Text>
-                </View>
-                <View style={{flex : 1}}>
-                    {
-                        ingredients.map( ingredient => {
-                            return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}> {ingredient.amount} </Text>
-                        })
-                    } 
                 </View>
             </View>
             
@@ -85,8 +78,8 @@ function EquipAndIngredients(props){
                 <Text style={{fontSize : 30, fontFamily : 'reem-kufi'}}>Missing Ingredients :</Text>
                 <View style={{flex : 2}}>
                     {
-                        missingIngredients.map( ingredient => {
-                            return <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {ingredient} </Text>
+                        missingIngredients.map( (ingredient, i) => {
+                            return <Text key={i} style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'} {'\u2022'} {ingredient} </Text>
                         })
                     }
                     <Text style={{fontSize : 20, fontFamily : 'reem-kufi'}}>{'\t'}  </Text>
