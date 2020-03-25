@@ -23,7 +23,7 @@ const CopilotView = walkthroughable(View);
 const CopilotTouchableOpacity = walkthroughable(TouchableOpacity);
 
 function Home(props) {
-  const [searchText, setSearchText] = useState('test') 
+  const [searchText, setSearchText] = useState('') 
   const { navigate } = useNavigation()
 
   const { chosenIngredients } = useSelector(state => {
@@ -57,6 +57,7 @@ function Home(props) {
 
   const handleSearchBar = (searchQuery) => {
     console.log(searchQuery)
+    props.navigation.navigate('Camera')
   }
 
   React.useLayoutEffect(() => {
@@ -74,11 +75,7 @@ function Home(props) {
               <TextInput style={{...Styles.searchTextInput, flex : 11}} 
                 placeholder="Find a recipe.."
                 onSubmitEditing={(event)=> handleSearchBar(event.nativeEvent.text)}
-                onChangeText={(text)=> {
-                  console.log(text)
-                  setSearchText(text)
-                }}
-                value={searchText}
+                value=""
                 />
             </View>
           </View>
